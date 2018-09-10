@@ -5,32 +5,42 @@ void setup()
    size(768, 432); 
 }
 
- private void pacManAnimation()
+private void pacMan(int x)
 {
-    //PACMAN - OPEN
-    name();
+  name();
+  //E - PACMAN
+   stroke(255, 255, 0);
+   strokeWeight(1.5);
+   fill(255, 255, 0);
+   arc(410, 196, 120, 120, (37-x)*(PI/180), (323+x)*(PI/180), PIE);
+     
+   //EYE
+   stroke(0);
+   strokeWeight(1.5);
+   fill(0);
+   ellipse(411, 162, 11, 11);
+}
+
+boolean isPacOpen = true;
+int x = 0;
+
+private void pacManAnimation()
+{  
+    if(isPacOpen)  
+    {
+      pacMan(x);
+      x++;
+    } else {
+      pacMan(x);
+      x--;
+    }
     
-    delay(600);
-    println("a ");
-    
-    //PACMAN - CLOSED
-    
-    stroke(255, 255, 0);
-    strokeWeight(1.5);
-    fill(255, 255, 0);
-    println("before arc");
-    arc(413, 196, 120, 120, 0*(PI/180), (360)*(PI/180), PIE);
-    println("after arc");
-    
-    //EYE
-    stroke(0);
-    strokeWeight(1.5);
-    fill(0);
-    ellipse(411, 162, 11, 11);
-    
-    delay(600);
- 
-    println("b ");
+    if(x == 0)
+    {
+      isPacOpen = true;
+    } else if (x == 37){
+      isPacOpen = false;  
+    }
 }
 
 private void name()
@@ -50,31 +60,19 @@ private void name()
    ellipse(277, 196, 120, 120);
    
    //S
-   arc(612, 196, 120, 120, 165*(PI/167), 347*(PI/181), CHORD);
-   arc(599, 194, 120, 120, 334*(PI/167), 526*(PI/181), CHORD);
+   arc(626, 196, 120, 120, 165*(PI/167), 347*(PI/181), CHORD);
+   arc(609, 194, 120, 120, 334*(PI/167), 526*(PI/181), CHORD);
    
    //R
    strokeWeight(40.3);
    line(497, 152, 497, 234);
-   line(528, 153, 501, 177);
-    
-   //E
-   stroke(255, 255, 0);
-   strokeWeight(1.5);
-   fill(255, 255, 0);
-   arc(413, 196, 120, 120, 37*(PI/180), 313*(PI/180), PIE);
-     
-   //EYE
-   stroke(0);
-   strokeWeight(1.5);
-   fill(0);
-   ellipse(411, 162, 11, 11);
+   //line(528, 153, 501, 177);
+   curve(822, 91, 540, 153, 498, 156, 498, -149);
 
 }
  
 
 void draw()
-{
-    pacManAnimation(); 
-     println("finito");
+{  
+    pacManAnimation();  
 }
