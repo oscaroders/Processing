@@ -46,6 +46,11 @@ private void pacManAnimation()
 private void name()
 {
    background(0);
+   stroke(0);
+   strokeWeight(1.5);
+   fill(255-x*3,94+x,134+x*2);
+   triangle(593, 75, 383, 326, 173, 75);
+   
    stroke(255, 255, 255);
    strokeWeight(1.5);
    fill(255, 255, 255);
