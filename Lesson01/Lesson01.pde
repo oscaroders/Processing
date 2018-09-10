@@ -4,9 +4,36 @@ void setup()
 {
    size(768, 432); 
 }
+
+ private void pacManAnimation()
+{
+    //PACMAN - OPEN
+    name();
+    
+    delay(600);
+    println("a ");
+    
+    //PACMAN - CLOSED
+    
+    stroke(255, 255, 0);
+    strokeWeight(1.5);
+    fill(255, 255, 0);
+    println("before arc");
+    arc(413, 196, 120, 120, 0*(PI/180), (360)*(PI/180), PIE);
+    println("after arc");
+    
+    //EYE
+    stroke(0);
+    strokeWeight(1.5);
+    fill(0);
+    ellipse(411, 162, 11, 11);
+    
+    delay(600);
  
-//name
-void draw()
+    println("b ");
+}
+
+private void name()
 {
    background(0);
    stroke(255, 255, 255);
@@ -28,19 +55,26 @@ void draw()
    
    //R
    strokeWeight(40.3);
-   line(489, 153, 489, 234);
-   line(528, 153, 494, 177);
-   
-   //PACMAN
+   line(497, 152, 497, 234);
+   line(528, 153, 501, 177);
+    
+   //E
    stroke(255, 255, 0);
    strokeWeight(1.5);
    fill(255, 255, 0);
-    arc(413, 196, 120, 120, 37*(PI/167), 313*(PI/181), PIE);
+   arc(413, 196, 120, 120, 37*(PI/180), 313*(PI/180), PIE);
      
-    //EYE
-    stroke(0);
-    strokeWeight(1.5);
-    fill(0);
-    ellipse(411, 162, 11, 11);
+   //EYE
+   stroke(0);
+   strokeWeight(1.5);
+   fill(0);
+   ellipse(411, 162, 11, 11);
 
+}
+ 
+
+void draw()
+{
+    pacManAnimation(); 
+     println("finito");
 }
