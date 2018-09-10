@@ -1,5 +1,3 @@
-import processing.serial.*;
-
 void setup()
 {
   //Window size 
