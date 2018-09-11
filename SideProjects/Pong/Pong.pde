@@ -1,9 +1,11 @@
 boolean gameStart = false;
 int windowWidth = 1000;
 int windowHeight = 500;
-int[] ballColour = {128, 128, 128};
-int[] paddleColour = {128, 128, 128};
-int[] middleLineColour = {240, 240, 240};
+int[] ballColor = {128, 128, 128};
+int[] playersColor = {128, 128, 128};
+int scoreRectangleAlpha = 240;
+int[] oppositeColor  = {128, 128, 128};
+int[] middleLineColor = {240, 240, 240};
 int diam = 20;
 int x = (int)random(50, 400);
 int y = (int)random(50, 450);
@@ -29,27 +31,40 @@ void setup()
 void draw()
 {
     background(255);
+    
+    noStroke();
+    color c = color(playersColor[0], playersColor[1], playersColor[2], scoreRectangleAlpha);
+    float valueC = alpha(c); 
+    fill(valueC);
+    rect(250-100, (windowHeight/2)-50, 200, 100);
+    
+    noStroke();
+    color d = color(playersColor[0], playersColor[1], playersColor[2], scoreRectangleAlpha);
+    float valueD = alpha(d); 
+    fill(valueD);
+    rect(750-100, (windowHeight/2)-50, 200, 100);
+    
     //middleLine
-    stroke(middleLineColour[0], middleLineColour[1], middleLineColour[2]);
-    fill(middleLineColour[0], middleLineColour[1], middleLineColour[2]);
+    noStroke();
+    fill(middleLineColor[0], middleLineColor[1], middleLineColor[2]);
     rect(middleLinePosition, 0, middleLineWidth, 500);
     
     //drawes the ball
-    stroke(ballColour[0], ballColour[1], ballColour[2]);
-    fill(ballColour[0], ballColour[1], ballColour[2]);
+    noStroke();
+    fill(ballColor[0], ballColor[1], ballColor[2]);
     ellipse(x, y, diam, diam);
     
     //players paddle
     playersPaddlePositionY = mouseY;
-    stroke(paddleColour[0], paddleColour[1], paddleColour[2]);
-    fill(paddleColour[0], paddleColour[1], paddleColour[2]);
+    noStroke();
+    fill(playersColor[0], playersColor[1], playersColor[2]);
     rect(playersPaddlePositionX, playersPaddlePositionY, paddleWidth, paddleHeight);
     
     //opposite paddle
     oppositePaddlePositionY = y - paddleHeight/2;
-    stroke(paddleColour[0], paddleColour[1], paddleColour[2]);
-    fill(paddleColour[0], paddleColour[1], paddleColour[2]);
-    rect(oppositePaddlePositionX, oppositePaddlePositionY, paddleWidth, paddleHeight);    
+    noStroke();
+    fill(oppositeColor[0], oppositeColor[1], oppositeColor[2]);
+    rect(oppositePaddlePositionX, oppositePaddlePositionY, paddleWidth, paddleHeight); 
     
     if(gameStart)
     {
