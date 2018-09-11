@@ -45,6 +45,7 @@ char counter = 0; //usening char to make counter non-negative (don´t remember i
 
 
 // pacManAnimation - sets an x value deciding how to animate the PACMAN
+// there is a lot of magic numbers here - aka somthing to fix later
 private void pacManAnimation()
 {  
    if(isPacOpen)  
@@ -135,7 +136,7 @@ private void eatingStuff(int numberOfDots)
   }
 }
 
-//name - Sets values för drawing the letters for the name
+//name - Sets values för drawing the letters for the name and background triangles
 private void name()
 {
    background(0);
