@@ -8,21 +8,41 @@ void setup()
 private void pacMan(int x)
 {
   name();
-  //E - PACMAN
+  
+   //dots to eat
+   if(!doesPacMove)
+   {
+       eatableStuff(counter);
+   } else {
+       eatingStuff(counter);  
+   }
+   
+   //E - PACMAN
    stroke(255, 255, 0);
    strokeWeight(1.5);
    fill(255, 255, 0); 
-   arc(410, 196, 120, 120, (37-x)*(PI/180), (323+x)*(PI/180), PIE);
+   // -2 on stapsToMove to weigh up stepsToMove starting value
+   arc(410 + (int)stepsToMove-2, 196, 120, 120, (37-x)*(PI/180), (323+x)*(PI/180), PIE);
      
    //EYE
    stroke(0);
    strokeWeight(1.5);
    fill(0);
-   ellipse(411+(x/2), 162+(x/3.5), 11, 11);
+   // -2 on stapsToMove to weigh up stepsToMove starting value
+   ellipse((411+(x/2)) + (int)stepsToMove-2, 162+(x/3.5), 11, 11);
+
+   
 }//pacMan
 
 boolean isPacOpen = true;
+boolean isTimeToMove = false;
+boolean doesPacMove = false;
+boolean didPacEat = false;
+boolean waitPacClose = false;
 int x = 0;
+double stepsToMove = 2;
+char counter = 0; //usening char to make counter non-negative (don´t remember if there is another asy way of doing this)
+
 
 // pacManAnimation - sets an x value deciding how to animate the PACMAN
 private void pacManAnimation()
@@ -40,9 +60,80 @@ private void pacManAnimation()
    {
       isPacOpen = true;
    } else if (x == 37){
-      isPacOpen = false;  
+      isPacOpen = false; 
+      //Counter to display dots
+      if(counter < 6 && !isTimeToMove)
+      {
+          counter++;
+      }
+      //To evaluate when to move PACMAN
+      if(counter == 6)
+      {
+          isTimeToMove = true;
+      }
+   }
+   
+   if(isTimeToMove)
+   {
+       stepsToMove = stepsToMove + 0.5; //last value has to be 0.5 to work. why? - I don´t know...
+       
+       if(stepsToMove % 45 == 1)
+       {
+           waitPacClose = true;
+       }
+       if(waitPacClose && x == 37)
+       {
+           counter--;
+           waitPacClose = false;
+       }
+       doesPacMove = true;
+       if(stepsToMove > 500){isTimeToMove = false;}
    }
 }//pacManAnimation
+
+private void eatableStuff(int numberOfDots)
+{
+  stroke(160, 242, 253);
+  strokeWeight(0.2);
+  fill(160, 242, 253);  
+  
+  switch (numberOfDots){
+    case 1:   ellipse(499, 197, 16, 16);
+              break;
+    case 2:   ellipse(499, 197, 16, 16); ellipse(549, 197, 16, 16);
+              break;
+    case 3:   ellipse(499, 197, 16, 16); ellipse(549, 197, 16, 16); ellipse(599, 197, 16, 16);
+              break;
+    case 4:   ellipse(499, 197, 16, 16); ellipse(549, 197, 16, 16); ellipse(599, 197, 16, 16); ellipse(649, 197, 16, 16);
+              break;
+    case 5:   ellipse(499, 197, 16, 16); ellipse(549, 197, 16, 16); ellipse(599, 197, 16, 16); ellipse(649, 197, 16, 16); ellipse(699, 197, 16, 16);
+              break;
+    case 6:   ellipse(499, 197, 16, 16); ellipse(549, 197, 16, 16); ellipse(599, 197, 16, 16); ellipse(649, 197, 16, 16); ellipse(699, 197, 16, 16); ellipse(749, 197, 16, 16);
+              break;
+  }
+}
+
+private void eatingStuff(int numberOfDots)
+{
+  stroke(160, 242, 253);
+  strokeWeight(0.2);
+  fill(160, 242, 253);  
+  
+  switch (numberOfDots){
+    case 1:   ellipse(749, 197, 16, 16);
+              break;
+    case 2:   ellipse(699, 197, 16, 16); ellipse(749, 197, 16, 16);
+              break;
+    case 3:   ellipse(649, 197, 16, 16); ellipse(699, 197, 16, 16); ellipse(749, 197, 16, 16);
+              break;
+    case 4:   ellipse(599, 197, 16, 16); ellipse(649, 197, 16, 16); ellipse(699, 197, 16, 16); ellipse(749, 197, 16, 16);
+              break;
+    case 5:   ellipse(549, 197, 16, 16); ellipse(599, 197, 16, 16); ellipse(649, 197, 16, 16); ellipse(699, 197, 16, 16); ellipse(749, 197, 16, 16);
+              break;
+    case 6:   ellipse(499, 197, 16, 16); ellipse(549, 197, 16, 16); ellipse(599, 197, 16, 16); ellipse(649, 197, 16, 16); ellipse(699, 197, 16, 16); ellipse(749, 197, 16, 16);
+              break;
+  }
+}
 
 //name - Sets values för drawing the letters for the name
 private void name()
@@ -83,4 +174,4 @@ private void name()
 void draw()
 {  
     pacManAnimation();  
-}//draw
+}
