@@ -1,7 +1,23 @@
-void setup()
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class Lesson01 extends PApplet {
+
+public void setup()
 {
   //Window size
-  size(768, 432);
+  
 }
 
 //pacMan - sets the vales for drawing the PACMAN
@@ -19,17 +35,17 @@ private void pacMan(int x)
 
    //E - PACMAN
    stroke(255, 255, 0);
-   strokeWeight(1.5);
+   strokeWeight(1.5f);
    fill(255, 255, 0);
    // -2 on stapsToMove to weigh up stepsToMove starting value
    arc(410 + (int)stepsToMove-2, 196, 120, 120, (37-x)*(PI/180), (323+x)*(PI/180), PIE);
 
    //EYE
    stroke(0);
-   strokeWeight(1.5);
+   strokeWeight(1.5f);
    fill(0);
    // -2 on stapsToMove to weigh up stepsToMove starting value
-   ellipse((411+(x/2)) + (int)stepsToMove-2, 162+(x/3.5), 11, 11);
+   ellipse((411+(x/2)) + (int)stepsToMove-2, 162+(x/3.5f), 11, 11);
 
 
 }//pacMan
@@ -77,7 +93,7 @@ private void pacManAnimation()
 
    if(isTimeToMove)
    {
-       stepsToMove = stepsToMove + 0.5; //last value has to be 0.5 to work. why? - I don´t know...
+       stepsToMove = stepsToMove + 0.5f; //last value has to be 0.5 to work. why? - I don´t know...
 
        if(stepsToMove % 45 == 1)
        {
@@ -99,7 +115,7 @@ private void pacManAnimation()
 private void eatableStuff(int numberOfDots)
 {
   stroke(160, 242, 253);
-  strokeWeight(0.2);
+  strokeWeight(0.2f);
   fill(160, 242, 253);
 
   switch (numberOfDots){
@@ -121,7 +137,7 @@ private void eatableStuff(int numberOfDots)
 private void eatingStuff(int numberOfDots)
 {
   stroke(160, 242, 253);
-  strokeWeight(0.2);
+  strokeWeight(0.2f);
   fill(160, 242, 253);
 
   switch (numberOfDots){
@@ -155,14 +171,14 @@ private void name()
 
    //O
    stroke(255, 255, 255);
-   strokeWeight(1.5);
+   strokeWeight(1.5f);
    fill(255, 255, 255);
    ellipse(152, 196, 120, 120);
-   strokeWeight(40.3);
+   strokeWeight(40.3f);
    line(322, 88, 322, 234);
 
    //D
-   strokeWeight(1.5);
+   strokeWeight(1.5f);
    ellipse(277, 196, 120, 120);
 
    //S
@@ -170,12 +186,12 @@ private void name()
    arc(609, 194, 120, 120, 334*(PI/167), 526*(PI/181), CHORD);
 
    //R
-   strokeWeight(40.3);
+   strokeWeight(40.3f);
    line(497, 152, 497, 234);
    curve(822, 91, 540, 153, 498, 156, 498, -149);
 }//name
 
-void scanLines(){
+public void scanLines(){
   //Draw our scan lines.
    for (int i = 0; i < height; i = i + 10) {
    stroke(12, 250, 112, 25);
@@ -187,7 +203,7 @@ void scanLines(){
    frame++;
 }
 
-void draw()
+public void draw()
 {
     pacManAnimation();
 }
@@ -195,3 +211,13 @@ void draw()
 
 
 // kolla om man kan få PAC att äta i loop... och lite fortare... med modulus.
+  public void settings() {  size(768, 432); }
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "Lesson01" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
+}
