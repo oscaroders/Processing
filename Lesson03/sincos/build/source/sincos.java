@@ -37,7 +37,6 @@ public void draw()
          stroke(0, i*2, 0);
          point(i * pointDistance, height/2 + cos((i + frame) * multiplier) * 200);
     }
-
     frame++;
 
 }
