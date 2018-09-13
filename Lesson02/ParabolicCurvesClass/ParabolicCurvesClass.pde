@@ -26,7 +26,7 @@ public class ParabolicCurve {
           if(i % 3 == 0){
             stroke(0);
           } else {
-            stroke(128);
+            stroke(0, 255, 0);
           }
 
           float lineX1 = axisX.x1 + (i * xDistanceForX);
