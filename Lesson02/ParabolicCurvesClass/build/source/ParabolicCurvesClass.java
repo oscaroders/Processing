@@ -28,11 +28,11 @@ public class ParabolicCurve {
   }
 
   public void drawParabolicCurve(){
-        float xDistanceForX = (axisX.x2 - axisX.x1)/numberOfLines;
+        /*loat xDistanceForX = (axisX.x2 - axisX.x1)/numberOfLines;
         float yDistanceForX = (axisX.y2 - axisX.y1)/numberOfLines;
 
         float xDistanceForY = (axisY.x2 - axisY.x1)/numberOfLines;
-        float yDistanceForY = (axisY.y2 - axisY.y1)/numberOfLines;
+        float yDistanceForY = (axisY.y2 - axisY.y1)/numberOfLines;*/
 
 
         for(int i = 0; i < numberOfLines; i++){
@@ -45,11 +45,11 @@ public class ParabolicCurve {
             stroke(0, 255, 0);
           }
 
-          float lineX1 = axisX.x1 + (i * xDistanceForX);
-          float lineY1 = axisX.y1 + (i * yDistanceForX);
+          float lineX1 = distance(axisX, 'x', i);//axisX.x1 + (i * xDistanceForX);
+          float lineY1 = distance(axisX, 'y', i);//axisX.y1 + (i * yDistanceForX);
 
-          float lineX2 = axisY.x1 + (i * xDistanceForY);
-          float lineY2 = axisY.y1 + (i * yDistanceForY);
+          float lineX2 = distance(axisY, 'x', i);//axisY.x1 + (i * xDistanceForY);
+          float lineY2 = distance(axisY, 'y', i);//axisY.y1 + (i * yDistanceForY);
 
           line(lineX1, lineY1, lineX2, lineY2);
 
@@ -58,6 +58,17 @@ public class ParabolicCurve {
           line(axisX.x1, axisX.y1, axisX.x2, axisX.y2);
           line(axisY.x1, axisY.y1, axisY.x2, axisY.y2);
       }
+  }
+
+  public float distance(LineCord axis, char xory, int i){
+    if(xory == 'x'){
+      float xDistance = axis.x1 + (i * (axis.x2 - axis.x1) / numberOfLines);
+      return xDistance;
+    } else {
+      float yDistance = axis.y1 + (i * (axis.y2 - axis.y1) / numberOfLines);
+      return yDistance;
+    }
+
   }
 }
 
@@ -94,7 +105,6 @@ public void draw(){
   int numberOfLines = 60;
   ParabolicCurve kurva = new ParabolicCurve(xAxis, yAxis, numberOfLines);
   kurva.drawParabolicCurve();
-
 }
   public void settings() {  size(1000, 1000); }
   static public void main(String[] passedArgs) {
