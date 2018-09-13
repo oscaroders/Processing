@@ -12,14 +12,16 @@ public class ParabolicCurve {
   }
 
   public void drawParabolicCurve(){
-        float xDistanceForX = axisX.x2 - axisX.x1;
-        float yDistanceForX = axisX.y2 - axisX.y1;
+        float xDistanceForX = (axisX.x2 - axisX.x1)/numberOfLines;
+        float yDistanceForX = (axisX.y2 - axisX.y1)/numberOfLines;
 
-        float xDistanceForY = axisY.x2 - axisY.x1;
-        float yDistanceForY = axisY.y2 - axisY.y1;
+        float xDistanceForY = (axisY.x2 - axisY.x1)/numberOfLines;
+        float yDistanceForY = (axisY.y2 - axisY.y1)/numberOfLines;
 
 
         for(int i = 0; i < numberOfLines; i++){
+
+          strokeWeight(1);
 
           if(i % 3 == 0){
             stroke(0);
@@ -27,13 +29,18 @@ public class ParabolicCurve {
             stroke(128);
           }
 
-          float lineX1 = axisX.x1 + i * xDistanceForX;
-          float lineY1 = axisX.y1 + i * yDistanceForX;
+          float lineX1 = axisX.x1 + (i * xDistanceForX);
+          float lineY1 = axisX.y1 + (i * yDistanceForX);
 
-          float lineX2 = axisY.x1 + i * xDistanceForX;
-          float lineY2 = axisY.y1 + i * yDistanceForX;
+          float lineX2 = axisY.x1 + (i * xDistanceForY);
+          float lineY2 = axisY.y1 + (i * yDistanceForY);
 
-          line(lineX1,lineY1,lineX2,lineY2);
+          line(lineX1, lineY1, lineX2, lineY2);
+
+          stroke(0);
+          strokeWeight(3);
+          line(axisX.x1, axisX.y1, axisX.x2, axisX.y2);
+          line(axisY.x1, axisY.y1, axisY.x2, axisY.y2);
       }
   }
 }
@@ -59,10 +66,6 @@ public class LineCord{
   }
 }
 
-//array = {x1, y1, x2, y2}
-LineCord yAxis = new LineCord(10, 10, 10 ,500);
-LineCord xAxis = new LineCord(yAxis.y1, yAxis.y2, 500, 500);
-
 void setup(){
   size(1000, 1000);
 }
@@ -70,7 +73,10 @@ void setup(){
 void draw(){
 
   background(255);
-  ParabolicCurve kurva = new ParabolicCurve(xAxis, yAxis, 10);
+  LineCord yAxis = new LineCord(63, 66, 474 ,708);
+  LineCord xAxis = new LineCord(yAxis.x2, yAxis.y2, 920, 63);
+  int numberOfLines = 60;
+  ParabolicCurve kurva = new ParabolicCurve(xAxis, yAxis, numberOfLines);
   kurva.drawParabolicCurve();
 
 }
