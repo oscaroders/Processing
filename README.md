@@ -10,5 +10,5 @@
 <h3> Side projects </h3>
 
 <ul>
-  <li><a herf="https://github.com/oscaroders/Processing/blob/master/SideProjects/Pong/Pong.pde">Pong</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/SideProjects/Pong/Pong.pde">Pong</a></li>
 </ul>
