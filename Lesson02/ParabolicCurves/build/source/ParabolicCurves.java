@@ -35,7 +35,7 @@ public void parabolicCurve(){
 
   for(int i = 0; i < height; i += lineDistance){
 
-    line(0, (i + frame) % height, (i + frame) % height, height);
+    //line(0, i, i, height);
     line((i + frame) % height, height, width, height-(i + frame) % height);
     //line(i, 0, width, i);
     line(width-(i + frame) % height, 0, 0, (i + frame) % height);
