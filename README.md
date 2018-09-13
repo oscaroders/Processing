@@ -4,9 +4,9 @@
 
 <ul>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson01/Lesson01.pde">Lesson01 - Name + Animation</a></li>
-  <li><a href="https://github.com/oscaroders/Processing/tree/master/Lesson02/ParabolicCurves">Lesson02 - ParabolicCurves</a></li>
-  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/sincos/sincos.pde">Lesson03 - Sinus & Cosinus</a></li>
-  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/circle/circle.pde">Lesson03 - Cirkle</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/tree/master/Lesson02/ParabolicCurves">Lesson02 - Parabolic Curves</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson02/ParabolicCurvesClass/ParabolicCurvesClass.pde">Lesson02 - Class for making Parabolic curves</a></li>  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/sincos/sincos.pde">Lesson03 - Sinus & Cosines</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/circle/circle.pde">Lesson03 - Circle</a></li>
 </ul>
 
 <h3> Side projects </h3>
