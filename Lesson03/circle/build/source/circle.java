@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class circle extends PApplet {
 
-int frame = 0;
+float frame = 0;
 float multiplier = 0.04f;
 int numberOfPoints = 20;
 int widthisch = 640;
@@ -33,8 +33,9 @@ public void draw()
   int[] center = {320, 240};
 
     for(float angle = 0; radians(angle) < 2*PI; angle += 360/numberOfPoints){
-      point(center[0] + cos(radians(angle)) * cirkleRad, center[1] + sin(radians(angle)) * cirkleRad);
-    }
+      point(center[0] + cos(radians(angle + frame)) * cirkleRad, center[1] + (sin(radians(angle + frame)) * cirkleRad));
+			frame++;
+		}
 }
   public void settings() { 	size(640, 480); }
   static public void main(String[] passedArgs) {
