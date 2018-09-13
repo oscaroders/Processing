@@ -11,6 +11,14 @@ void setup(){
 void draw(){
 
   parabolicCurve();
+  background(255);
+  LineCord yAxis = new LineCord(63, 66, 474 ,708);
+  LineCord xAxis = new LineCord(yAxis.x2, yAxis.y2, 920, 63);
+  int numberOfLines = 60;
+  ParabolicCurve kurva = new ParabolicCurve(xAxis, yAxis, numberOfLines);
+  kurva.drawParabolicCurve();
+
+  parabolicCurve();
 
 }
 
