@@ -19,8 +19,18 @@ void draw()
 
   sizeCount += 0.02;
 
-  float circleRad = 200 + sin(sizeCount)*50;
+  float circleRad = 150;
   float circleDiam = circleRad * 2;
+
+	strokeWeight(20);
+	stroke(random(0,255), random(0,255), random(0,255));
+	point(25,25);
+	stroke(random(0,255), random(0,255), random(0,255));
+	point(25, height - 25);
+	stroke(random(0,255), random(0,255), random(0,255));
+	point(width - 25 ,25);
+	stroke(random(0,255), random(0,255), random(0,255));
+	point(width - 25, height - 25);
 
   for(float angle = 0; radians(angle) < 2*PI; angle += 360/numberOfPoints){
 
