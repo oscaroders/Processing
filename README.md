@@ -7,6 +7,7 @@
   <li><a href="https://github.com/oscaroders/Processing/tree/master/Lesson02/ParabolicCurves">Lesson02 - Parabolic Curves</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/sincos/sincos.pde">Lesson03 - Sinus & Cosines</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/circle/circle.pde">Lesson03 - Circle</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/mouseHunter/mouseHunter.pde">Lesson04 - Mouse Hunter</a></li>
 </ul>
 
 <h3> Extra assignments </h3>
