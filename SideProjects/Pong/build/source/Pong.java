@@ -63,7 +63,11 @@ public void draw(){
 }
 
  public void keyPressed(){
-    gameStart = !gameStart;
+    if(keyCode == ENTER){
+      gameStart = !gameStart;
+    } else {
+      return;
+    }
 }
 
 public void drawCourt(){
@@ -79,7 +83,7 @@ public void drawCourt(){
   //drawes the ball
   noStroke();
   fill(ballColor);
-  ellipse(x, y, diam, diam);
+  rect(x, y, diam, diam);
 
   //player1 paddle
   //player1PaddlePositionY = mouseY;
