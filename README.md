@@ -13,8 +13,8 @@
 
 <h3> Extra assignments </h3>
 <ul>
-  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson02/ParabolicCurvesClass/ParabolicCurvesClass.pde">Lesson02 - Class for making Parabolic curves</a></li>  
-  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/trigincolor/trigincolor.pde">Lesson03 - Circle <3 Line == Awesome</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson02/ParabolicCurvesClass/ParabolicCurvesClass.pde">Lesson02 - Class for making Parabolic curves</a></li> <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/trigincolor/trigincolor.pde">Lesson03 - Circle <3 Line == Awesome</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/pointToAVector/pointToAVector.pde">Lesson04 - Find the vector coordinates</a></li>
 </ul>
 
 <h3> Side projects </h3>
