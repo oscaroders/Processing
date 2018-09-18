@@ -41,8 +41,6 @@ public void setup(){
   background(255);
 }
 
-
-
 public void draw(){
   message();
   drawMouse();
@@ -51,6 +49,43 @@ public void draw(){
 
   drawPoints();
   calculateScore();
+}
+
+public void message(){
+  String mess = "Right click to draw a line from green to red - ZERO is the goal"; //honestly, I don´t know if 0 in score is possible. but the point system turnd out to be difficult..
+  String mess2 = "press ENTER to see your score";
+  String messScore ="you got: " + score;
+
+  if(showScore){
+    fill(0);
+    textSize(25);
+    textAlign(CENTER, BOTTOM);
+    text(messScore,  width/2, height/2);
+  } else {
+    fill(0);
+    textSize(20);
+    textAlign(CENTER, BOTTOM);
+    text(mess, width/2, 40);
+    textAlign(CENTER, TOP);
+    text(mess2, width/2, 40);
+  }
+}
+
+public void drawMouse(){
+  mousePressed();
+}
+
+public void mousePressed(){
+  int colorX = mouseX;
+  int colorY = mouseY;
+  if(mousePressed){
+    stroke(colorX, colorY, 128);
+    line(pmouseX, pmouseY, mouseX, mouseY);
+    if(mouseX > zeroX || mouseX < (zeroX + vec1.x)){
+      drawYValues[mouseX] = mouseY;
+    }
+    hasDrawn = true;
+  }
 }
 
 public void drawPoints(){
@@ -83,48 +118,8 @@ public void keyPressed(){
       }
       score = score / scoreDiv;
       showScore = true;
-      println(score);
     }
   }
-}
-
-public void drawMouse(){
-  mousePressed();
-}
-
-public void mousePressed(){
-  int colorX = mouseX;
-  int colorY = mouseY;
-  if(mousePressed){
-    stroke(colorX, colorY, 128);
-    line(pmouseX, pmouseY, mouseX, mouseY);
-    if(mouseX > zeroX || mouseX < (zeroX + vec1.x)){
-      drawYValues[mouseX] = mouseY;
-    }
-    hasDrawn = true;
-    println(drawYValues);
-  }
-}
-
-public void message(){
-  String mess = "Right click to draw a line from green to red - ZERO is the goal"; //honestly, I don´t know if 0 in score is possible. but the point system turnd out to be difficult..
-  String mess2 = "press ENTER to see your score";
-  String messScore ="you got: " + score;
-
-  if(showScore){
-    fill(0);
-    textSize(25);
-    textAlign(CENTER, BOTTOM);
-    text(messScore,  width/2, height/2);
-  } else {
-    fill(0);
-    textSize(20);
-    textAlign(CENTER, BOTTOM);
-    text(mess, width/2, 40);
-    textAlign(CENTER, TOP);
-    text(mess2, width/2, 40);
-  }
-
 }
   public void settings() {  size(1000, 500); }
   static public void main(String[] passedArgs) {
