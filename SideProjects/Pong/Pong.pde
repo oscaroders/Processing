@@ -1,179 +1,256 @@
-boolean gameStart = false;
-int windowWidth = 1000;
-int windowHeight = 500;
+public class Player {
+
+  String name;
+  color playerColor;
+  int score;
+
+  public Player(String name, color playerColor, int score){
+    this.name = name;
+    this.playerColor = playerColor;
+    this.score = score;
+  }
+
+  void scoreInc(){
+    score++;
+  }
+
+  int getScore(){
+    return score;
+  }
+
+  void setScore(int point){
+    score = point;
+  }
+
+  String scoreInText(){
+      String score1 = "zero";
+      int points = score + 1;
+      switch (points){
+          case 1:  score1 = "zero";
+          break;
+          case 2:  score1 = "one";
+          break;
+          case 3:  score1 = "two";
+          break;
+          case 4:  score1 = "three";
+          break;
+          case 5:  score1 = "four";
+          break;
+          case 6:  score1 = "five";
+          break;
+          case 7:  score1 = "six";
+          break;
+          case 8:  score1 = "seven";
+          break;
+          case 9:  score1 = "eight";
+          break;
+          case 10:  score1 = "nine";
+          break;
+          case 11:  score1 = "ten";
+          break;
+      }
+      return score1;
+  }
+}
+
+// variable declerations ----------------------------------------------------
+
+boolean  gameStart;
+boolean upPlayer1, downPlayer1;
+boolean upPlayer2, downPlayer2;
 color ballColor = color(128, 128, 128);
 color player1Color = color(255, 0, 0);
-int scoreAlpha = 100;
 color player2Color  = color(0, 255, 0);
 color middleLineColor = color(240, 240, 240);
-int diam = 20;
-int x = (int)random(50, 400);
-int y = (int)random(50, 450);
-int paddleWidth = 10;
-int paddleHeight = 100;
-int paddleSpeed = 10;
-int player1PaddlePositionX = 1000-paddleWidth;
-int player2PaddlePositionX = 0;
-int player1PaddlePositionY = 0;
-int player2PaddlePositionY = 0;
-int middleLineWidth = 10;
-int middleLinePosition = 500-middleLineWidth/2;
-int speedX = (int)random(7, 9);
-int speedY = (int)random(7, 9);
-int reverse = -1;
-int player1Score = 0;
-int player2Score = 0;
+float windowWidth = 1000, windowHeight = 500;
+float ballDiam = 20;
+float paddleWidth = 10, paddleHeight = 100, paddleSpeed = 10;
+float paddlePlayer1X = 0, paddlePlayer1Y = windowHeight / 2;
+float paddlePlayer2X = windowWidth - paddleWidth, paddlePlayer2Y = windowHeight / 2;
+float speedX = (int)random(7, 9), speedY = (int)random(7, 9);
+float reverse = -1, x, y;
+float winScore = 10;
 
-
-void setup()
-{
+void setup(){
   size(1000, 500);
+  textAlign(CENTER, CENTER);
+  textSize(30);
+  x = width / 2;
+  y = height / 2;
 }
+
+Player player1 = new Player("Oscar", player1Color, 0);
+Player player2 = new Player("Ingrid", player2Color, 0);
 
 void draw(){
 
-    Player player1 = new Player("Oscar", player1Color);
-    Player player2 = new Player("Ingrid", player2Color);
+  drawCourt();
 
-    if(gameStart){
-        x = x + speedX;
-        y = y + speedY;
-    }
+  if(gameStart){
+      x = x + speedX;
+      y = y + speedY;
+  }
 
-    drawCourt();
-    bounderies();
-    paddleBounce();
-    scoreCheck(player1, player2);
-}
-
- void keyPressed(){
-    if(keyCode == ENTER){
-      gameStart = !gameStart;
-    } else {
-      return;
-    }
+  bounderies();
+  paddleMove();
+  paddleRestriction();
+  paddleBounce();
+  displayScore();
+  gameOver();
 }
 
 void drawCourt(){
   background(255);
 
-  paddleMove();
-
   //middleLine
   noStroke();
   fill(middleLineColor);
-  rect(middleLinePosition, 0, middleLineWidth, 500);
+  rect((width / 2) - 5, 0, 10, height);
 
   //drawes the ball
   noStroke();
   fill(ballColor);
-  rect(x, y, diam, diam);
+  rect(x, y, ballDiam, ballDiam);
 
   //player1 paddle
-  //player1PaddlePositionY = mouseY;
   noStroke();
   fill(player1Color);
-  rect(player1PaddlePositionX, player1PaddlePositionY, paddleWidth, paddleHeight);
+  rect(paddlePlayer1X, paddlePlayer1Y, paddleWidth, paddleHeight);
 
-  //oplayer2 paddle
-  //player2PaddlePositionY = y - paddleHeight/2;
+  //player2 paddle
   noStroke();
   fill(player2Color);
-  rect(player2PaddlePositionX, player2PaddlePositionY, paddleWidth, paddleHeight);
-}
-
-void paddleMove(){
-  if(keyPressed == true && key == 'o'){
-    player1PaddlePositionY -= 6;
-  }
-  if(keyPressed == true && key == 'l'){
-    player1PaddlePositionY += 6;
-  }
-
-  if(keyPressed == true && key == 'w'){
-    player2PaddlePositionY -= 6;
-  }
-  if(keyPressed == true && key == 's'){
-    player2PaddlePositionY += 6;
-  }
+  rect(paddlePlayer2X, paddlePlayer2Y, paddleWidth, paddleHeight);
 }
 
 void bounderies(){
-  if(y+diam/2 > windowHeight || y-diam/2 < 0){
-      speedY = speedY*reverse;
+  if(y + ballDiam / 2 > windowHeight || y - ballDiam / 2 < 0){
+      speedY *= reverse;
       y = y + speedY;
   }
 }
 
-void paddleBounce(){
-  if((x+diam/2 > windowWidth - paddleWidth) && ((y > player1PaddlePositionY && y < player2PaddlePositionY + paddleHeight))){
-      speedX = speedX*reverse;
-      x = x + speedX;
-      y = (y + (int)random(2, 5)) + speedY;
+void paddleMove() {
+  if (upPlayer1) {
+    paddlePlayer1Y -= paddleSpeed;
   }
-
-  if((x-diam/2 < 0 + paddleWidth) && (y > player2PaddlePositionY && y < player2PaddlePositionY + paddleHeight)){
-      speedX = speedX*reverse;
-      x = x + speedX;
-      y = (y + (int)random(2, 5)) + speedY;
+  if (downPlayer1) {
+    paddlePlayer1Y += paddleSpeed;
   }
-}
-
-void scoreCheck(Player player1, Player player2){
-  if(x > windowWidth || x < 0){
-      gameStart = false;
-      x = (int)random(50, 400);
-      y = (int)random(50, 450);
-      speedX = (int)random(7, 9);
-      speedY = (int)random(7, 9);
-
-      if (x > windowWidth){
-        player1Score++;
-        player1.scoreDisplay(player1Score);
-      } else if(x < 0){
-        player2Score++;
-        player2.scoreDisplay(player2Score);
-      } else {
-        return;
-      }
+  if (upPlayer2) {
+    paddlePlayer2Y -= paddleSpeed;
+  }
+  if (downPlayer2) {
+    paddlePlayer2Y += paddleSpeed;
   }
 }
 
-
-public class Player {
-
-  String name;
-  color playerColor;
-
-  public Player(String name, color playerColor){
-    this.name = name;
-    this.playerColor = playerColor;
+void paddleRestriction() {
+  if (paddlePlayer1Y - paddleHeight / 2 < 0) {
+    paddlePlayer1Y += paddleSpeed;
   }
+  if (paddlePlayer1Y + paddleHeight / 2 > height) {
+    paddlePlayer1Y -= paddleSpeed;
+  }
+  if (paddlePlayer2Y - paddleHeight / 2 < 0) {
+    paddlePlayer2Y += paddleSpeed;
+  }
+  if (paddlePlayer2Y + paddleHeight / 2 > height) {
+    paddlePlayer2Y -= paddleSpeed;
+  }
+}
 
-  void scoreDisplay(int point)
-  {
-      String score = "zero";
-      switch (point){
-          case 1:  score = "zero";
-          break;
-          case 2:  score = "one";
-          break;
-          case 3:  score = "two";
-          break;
-          case 4:  score = "three";
-          break;
-          case 5:  score = "four";
-          break;
-          case 6:  score = "five";
-          break;
-          case 7:  score = name + " WINS!";
-          break;
-      }
+void paddleBounce() {
+  if (x - ballDiam / 2 < paddlePlayer1X + paddleWidth / 2 && y - ballDiam / 2 < paddlePlayer1Y + paddleHeight && y + ballDiam / 2 > paddlePlayer1Y - paddleHeight / 2 ) {
+    if (speedX < 0) {
+      speedX *= reverse;
+    }
+  }
+  else if (x + ballDiam / 2 > paddlePlayer2X + paddleWidth / 2 && y - ballDiam / 2 < paddlePlayer2Y + paddleHeight / 2 && y + ballDiam / 2 > paddlePlayer2Y - paddleHeight / 2 ) {
+    if (speedX > 0) {
+      speedX *= reverse;
+    }
+  }
+}
 
-      int textHeight = 62;
-      textSize(textHeight);
-      fill(playerColor);
-      text(score, (width/4) - 60, (height/2) + 15);
+void displayScore(){
+  detectScore();
 
+  fill(0);
+  String p1 = player1.scoreInText();
+  text(p1, 240, 50);
+  String p2 = player2.scoreInText();
+  text(p2, width - 240, 50);
+}
+
+void detectScore(){
+  if ( x > width - ballDiam / 2) {
+     gameStart = !gameStart;
+     speedX *= reverse;
+     player1.scoreInc();
+     setup();
+  } else if ( x < 0 + ballDiam / 2) {
+     gameStart = !gameStart;
+     speedX *= reverse;
+     player2.scoreInc();
+     setup();
+  }
+}
+
+void keyPressed(){
+   if(keyCode == ENTER){
+     gameStart = !gameStart;
+   }
+   if (key == 'w' || key == 'W') {
+     upPlayer1 = true;
+   }
+   if (key == 's' || key == 'S') {
+     downPlayer1 = true;
+   }
+   if (key == 'o' || key == 'O') {
+     upPlayer2 = true;
+   }
+   if (key == 'l' || key == 'L') {
+     downPlayer2 = true;
+ }
+}
+
+void keyReleased(){
+  if (key == 'w' || key == 'W') {
+    upPlayer1 = false;
+  }
+  if (key == 's' || key == 'S') {
+    downPlayer1 = false;
+  }
+  if (key == 'o' || key == 'O') {
+    upPlayer2 = false;
+  }
+  if (key == 'l' || key == 'L') {
+    downPlayer2 = false;
+  }
+}
+
+void gameOver() {
+  if(player1.getScore() == winScore) {
+    gameOverPage(player1.name + " wins!", player1.playerColor);
+  }
+  if(player2.getScore() == winScore) {
+    gameOverPage(player2.name + " wins!", player2.playerColor);
+  }
+}
+
+void gameOverPage(String text, color c) {
+  speedX = 0;
+  speedY = 0;
+  fill(0);
+  text("Game over", width/2, height/3 - 40);
+  text("Press ENTER to play again", width/2, height/3 + 40);
+  fill(c);
+  text(text, width/2, height/3);
+  if(mousePressed) {
+    player1.setScore(0);
+    player2.setScore(0);
+    speedX = 1;
+    speedY = 1;
   }
 }
