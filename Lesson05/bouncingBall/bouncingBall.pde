@@ -1,6 +1,6 @@
 float posY = 100;
 float posX = 500;
-float velocity = 100;
+float velocity = 160;
 float acceleration = 2;
 float tpf;
 float time;
@@ -19,10 +19,15 @@ void draw(){
 
   velocity += acceleration;
   posY += velocity * tpf;
+  posX++;
 
   if(posY > height){
     velocity *= -1;
     posY = height - 1;
+  }
+
+  if(posX > width){
+    posX = 0;
   }
 
   time = currentTime;
