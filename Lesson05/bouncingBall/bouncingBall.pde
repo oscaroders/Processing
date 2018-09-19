@@ -1,5 +1,6 @@
 float posY = 100;
 float posX = 500;
+OVector vec1 = new OVector(posX, posY);
 float velocity = 160;
 float acceleration = 2;
 float tpf;
@@ -18,16 +19,16 @@ void draw(){
   drawSite();
 
   velocity += acceleration;
-  posY += velocity * tpf;
-  posX++;
+  vec1.yValue += velocity * tpf;
+  vec1.xValue++;
 
-  if(posY > height){
+  if(vec1.yValue > height){
     velocity *= -1;
-    posY = height - 1;
+    vec1.yValue = height - 1;
   }
 
-  if(posX > width){
-    posX = 0;
+  if(vec1.xValue > width){
+    vec1.xValue = 0;
   }
 
   time = currentTime;
@@ -35,5 +36,5 @@ void draw(){
 
 void drawSite(){
   background(255);
-  ellipse(posX, posY, 10, 10);
+  ellipse(vec1.xValue, vec1.yValue, 10, 10);
 }
