@@ -1,32 +1,48 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class manyBalls extends PApplet {
+
 public class Ball{
 
   public PVector pos;
   public PVector velocity;
   float diam;
-  color c;
+  int c;
 
-  public Ball(PVector pos, PVector velocity, float diam, color c){
+  public Ball(PVector pos, PVector velocity, float diam, int c){
     this.diam = diam;
     this.velocity = velocity;
     this.c = c;
     this.pos = pos;
   }
 
-  void setPos(float x, float y){
+  public void setPos(float x, float y){
     this.pos.set(x, y);
   }
 
-  void setVel(float x, float y){
+  public void setVel(float x, float y){
     this.velocity.set(x, y);
   }
 
-  void drawBall(){
+  public void drawBall(){
     noStroke();
     fill(c);
     ellipse(this.pos.x, this.pos.y, diam, diam);
   }
 
-  void move(){
+  public void move(){
 
     this.setVel(this.velocity.x, this.velocity.y + acceleration);
     this.setPos(this.pos.x + this.velocity.x * tpf, this.pos.y + this.velocity.y * tpf);
@@ -63,11 +79,11 @@ PVector vels[] = new PVector[numberOfBalls];
 Ball balls[] = new Ball[numberOfBalls];
 //Ball ball;
 
-void setup(){
-  size(1000, 500);
+public void setup(){
+  
   frameRate(60);
   for(int i = 0; i < numberOfBalls; i ++){
-    color c = color(random(128, 255), random(1, 255) , 15 * i);
+    int c = color(random(128, 255), random(1, 255) , 15 * i);
     vecs[i] = new PVector(random(10, windowWidth -10), random(10, windowHeight - 10));
     vels[i] = new PVector(random(-50, 50), random(100, 200));
     balls[i] = new Ball(vecs[i], vels[i], diam, c);
@@ -75,7 +91,7 @@ void setup(){
   //ball = new Ball(vec, vel, diam, c);
 }
 
-void draw(){
+public void draw(){
   int currentTime = millis();
   tpf = (currentTime - time) * 0.001f;
   background(255);
@@ -89,8 +105,18 @@ void draw(){
   time = currentTime;
 }
 
-void drawSite(Ball ball){
+public void drawSite(Ball ball){
 
   ball.drawBall();
   ball.move();
+}
+  public void settings() {  size(1000, 500); }
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "manyBalls" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
