@@ -8,8 +8,8 @@
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/sincos/sincos.pde">Lesson03 - Sinus & Cosines</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/circle/circle.pde">Lesson03 - Circle</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/mouseHunter/mouseHunter.pde">Lesson04 - Mouse Hunter</a></li>
-  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/ballBounce/ballBounce.pde">Lesson04 - Ball bounce</a></li>
-  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/bouncingBall/bouncingBall.pde">Lesson05 - Ball bounce with acceleration!!!</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/ballBounce/ballBounce.pde">Lesson04 - Ball with bounce</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/bouncingBall/bouncingBall.pde">Lesson05 - Bouncing ball with acceleration!</a></li>
 </ul>
 
 <h3> Extra assignments </h3>
@@ -17,6 +17,7 @@
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson02/ParabolicCurvesClass/ParabolicCurvesClass.pde">Lesson02 - Class for making Parabolic curves</a></li> <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/trigincolor/trigincolor.pde">Lesson03 - Circle <3 Line == Awesome</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/pointToAVector/pointToAVector.pde">Lesson04 - Find the vector coordinates</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/vectorClass/vectorClass.pde">Lesson04 - A vector class</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/manyBalls/manyBalls.pde">Lesson04 - -Many bouncing balls</a></li>
 </ul>
 
 <h3> Side projects </h3>
