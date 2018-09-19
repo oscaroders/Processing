@@ -9,6 +9,7 @@
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/circle/circle.pde">Lesson03 - Circle</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/mouseHunter/mouseHunter.pde">Lesson04 - Mouse Hunter</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/ballBounce/ballBounce.pde">Lesson04 - Ball bounce</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/bouncingBall/bouncingBall.pde">Lesson05 - Ball bounce with acceleration!!!</a></li>
 </ul>
 
 <h3> Extra assignments </h3>
