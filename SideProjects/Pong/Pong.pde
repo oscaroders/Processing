@@ -65,8 +65,8 @@ color middleLineColor = color(240, 240, 240);
 float windowWidth = 1000, windowHeight = 500;
 float ballDiam = 20;
 float paddleWidth = 10, paddleHeight = 100, paddleSpeed = 10;
-float paddlePlayer1X = 0, paddlePlayer1Y = windowHeight / 2;
-float paddlePlayer2X = windowWidth - paddleWidth, paddlePlayer2Y = windowHeight / 2;
+float paddlePlayer1X = 10, paddlePlayer1Y = windowHeight / 2;
+float paddlePlayer2X = windowWidth - paddleWidth -10, paddlePlayer2Y = windowHeight / 2;
 float speedX = (int)random(7, 9), speedY = (int)random(7, 9);
 float reverse = -1, x, y;
 float winScore = 10;
@@ -120,7 +120,7 @@ void drawCourt(){
   //player2 paddle
   noStroke();
   fill(player2Color);
-  rect(paddlePlayer2X, paddlePlayer2Y, paddleWidth, paddleHeight);
+  rect(paddlePlayer2X, paddlePlayer2Y, paddleWidth , paddleHeight);
 }
 
 void bounderies(){
@@ -161,12 +161,12 @@ void paddleRestriction() {
 }
 
 void paddleBounce() {
-  if (x - ballDiam / 2 < paddlePlayer1X + paddleWidth / 2 && y - ballDiam / 2 < paddlePlayer1Y + paddleHeight && y + ballDiam / 2 > paddlePlayer1Y - paddleHeight / 2 ) {
+  if (x - ballDiam / 2 < paddlePlayer1X  && y - ballDiam / 2 < paddlePlayer1Y + paddleHeight && y + ballDiam / 2 > paddlePlayer1Y - paddleHeight / 2 ) {
     if (speedX < 0) {
       speedX *= reverse;
     }
   }
-  else if (x + ballDiam / 2 > paddlePlayer2X + paddleWidth / 2 && y - ballDiam / 2 < paddlePlayer2Y + paddleHeight / 2 && y + ballDiam / 2 > paddlePlayer2Y - paddleHeight / 2 ) {
+  else if (x + ballDiam / 2 > paddlePlayer2X - paddleWidth / 2 && y - ballDiam / 2 < paddlePlayer2Y + paddleHeight / 2 && y + ballDiam / 2 > paddlePlayer2Y - paddleHeight / 2 ) {
     if (speedX > 0) {
       speedX *= reverse;
     }
@@ -176,9 +176,10 @@ void paddleBounce() {
 void displayScore(){
   detectScore();
 
-  fill(0);
+  fill(player1.playerColor);
   String p1 = player1.scoreInText();
   text(p1, 240, 50);
+  fill(player2.playerColor);
   String p2 = player2.scoreInText();
   text(p2, width - 240, 50);
 }
