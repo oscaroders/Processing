@@ -16,9 +16,9 @@ public class bouncingBall extends PApplet {
 
 float posY = 100;
 float posX = 500;
-OVector vec1 = new OVector(posX, posY);
+PVector vec1 = new PVector(posX, posY);
 float velocity = 160;
-float acceleration = 2;
+float acceleration = 50;
 float tpf;
 float time;
 
@@ -35,16 +35,16 @@ public void draw(){
   drawSite();
 
   velocity += acceleration;
-  vec1.yValue += velocity * tpf;
-  vec1.xValue++;
+  vec1.y += velocity * tpf;
+  vec1.x = vec1.x + 50 * tpf;
 
-  if(vec1.yValue > height){
+  if(vec1.y > height){
     velocity *= -1;
-    vec1.yValue = height - 1;
+    vec1.y = height - 1;
   }
 
-  if(vec1.xValue > width){
-    vec1.xValue = 0;
+  if(vec1.x > width){
+    vec1.set(0, vec1.y);
   }
 
   time = currentTime;
@@ -52,7 +52,7 @@ public void draw(){
 
 public void drawSite(){
   background(255);
-  ellipse(vec1.xValue, vec1.yValue, 10, 10);
+  ellipse(vec1.x, vec1.y, 10, 10);
 }
 public class OVector{
 
