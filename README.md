@@ -17,7 +17,8 @@
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson02/ParabolicCurvesClass/ParabolicCurvesClass.pde">Lesson02 - Class for making Parabolic curves</a></li> <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson03/trigincolor/trigincolor.pde">Lesson03 - Circle <3 Line == Awesome</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/pointToAVector/pointToAVector.pde">Lesson04 - Find the vector coordinates</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/vectorClass/vectorClass.pde">Lesson04 - A vector class</a></li>
-  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/manyBalls/manyBalls.pde">Lesson05 - -Many bouncing balls</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/manyBalls/manyBalls.pde">Lesson05 - Many bouncing balls</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/gravity/gravity.pde">Lesson05 - gravity or rather the opposite</a></li>
 </ul>
 
 <h3> Side projects </h3>
