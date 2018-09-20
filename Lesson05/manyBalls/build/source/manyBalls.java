@@ -47,6 +47,7 @@ public class Ball{
     this.setVel(this.velocity.x, this.velocity.y + acceleration);
     this.setPos(this.pos.x + this.velocity.x * tpf, this.pos.y + this.velocity.y * tpf);
 
+
     if(this.pos.y > windowHeight){
       this.setVel(this.velocity.x, this.velocity.y * -1);
       this.setPos(this.pos.x, height - 1);
@@ -99,8 +100,6 @@ public void draw(){
   for(int i = 0; i < numberOfBalls; i++){
     drawSite(balls[i]);
   }
-
-
 
   time = currentTime;
 }

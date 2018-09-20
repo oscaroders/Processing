@@ -30,9 +30,8 @@ public void draw(){
 
   stroke(0);
   ellipse(circleVec.x, circleVec.y, diam, diam);
-
-  move();
   line(circleVec.x, circleVec.y, circleVec.x + vec1.x * diam/2, circleVec.y + vec1.y * diam/2);
+  move();
 
 }
 
