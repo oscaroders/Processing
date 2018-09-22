@@ -10,6 +10,7 @@
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/mouseHunter/mouseHunter.pde">Lesson04 - Mouse Hunter</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/ballBounce/ballBounce.pde">Lesson04 - Ball with bounce</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/bouncingBall/bouncingBall.pde">Lesson05 - Bouncing ball with acceleration!</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/tree/master/Lesson06/ZombieApocalypse">Lesson06 - Zombie apocalypse!</a></li>
 </ul>
 
 <h3> Extra assignments </h3>
@@ -19,6 +20,7 @@
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/vectorClass/vectorClass.pde">Lesson04 - A vector class</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/manyBalls/manyBalls.pde">Lesson05 - Many bouncing balls</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/gravity/gravity.pde">Lesson05 - gravity or rather the opposite</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/tree/master/Lesson06/ZombieApocalypse">Lesson06 - Zombie apocalypse!</a></li>
 </ul>
 
 <h3> Side projects </h3>
