@@ -28,45 +28,20 @@ public void setup(){
 public void draw(){
   int currentTime = millis();
   tpf = (currentTime - time) * 0.001f;
-  background(255);
+  background(210);
 
   ralf.update();
 
   time = currentTime;
 }
-class CharacterManager{
-
-  int numberOfCharacters;
-  Human[] humans;
-
-  public CharacterManager(int numberOfCharacters){
-    this.numberOfCharacters = numberOfCharacters;
-  }
-
-  public void spawn(){
-    humans = new Human[numberOfCharacters];
-    for(int i = 0; i < numberOfCharacters; i++){
-      humans[i] = new Human();
-    }
-    // Zombie zombie = new Zombie();
-    // zombie = humans[0];
-  }
-
-  public void update(){
-    for(int i = 0; i < numberOfCharacters; i++){
-      print("update");
-      humans[i].update();
-    }
-  }
-}
-class Human{
+public class Character{
 
   PVector position;
   PVector velocity;
   float size;
-  int c = color(255, 160, 122);
+  int c = color(0);
 
-  public Human(){
+  public Character(){
     position = new PVector();
     position.x = random(0, width);
     position.y = random(0, height);
@@ -75,48 +50,249 @@ class Human{
     velocity.x = random(3, 5) * random(-1, 1);
     velocity.y = random(3, 5) * random(-1, 1);
 
-    size = random(9, 12);
+    size = random(15, 18);
+  }
+
+  public Character(float x, float y){
+    position = new PVector(x, y);
+
+    velocity = new PVector();
+    velocity.x = random(3, 5) * random(-1, 1);
+    velocity.y = random(3, 5) * random(-1, 1);
+
+    size = random(15, 18);
   }
 
   public void update(){
+    bounderies();
+    timeToTurn();
+
     position.x += velocity.x;
     position.y += velocity.y;
-    
+
+
     draw();
   }
 
   public void draw(){
-
-
     fill(c);
     noStroke();
     rect(position.x, position.y, size, size);
   }
-}
-class Zombie extends Human{
 
+  public void bounderies(){
+    if(position.x < 0)
+      position.x = height;
+
+    if(position.x > height)
+      position.x = 0;
+
+    if(position.y < 0)
+      position.y = width;
+
+    if(position.y > width)
+      position.y = 0;
+  }
+
+  public void timeToTurn(){
+    int counter = millis();
+    if(counter % 100 == (int)random(0,10)){
+      velocity.y = random(3, 5);
+    } else if(counter % 100 == (int)random(20,30)){
+      velocity.y = random(3, 5) * -1;
+    } else if(counter % 100 == (int)random(50,60)){
+      velocity.x = random(3, 5);
+    } else if(counter % 100 == (int)random(70,80)){
+      velocity.x = random(3, 5) * -1;
+    }
+  }
+
+  public boolean isHuman(){
+    return true;
+  }
+}
+class CharacterManager{
+
+  int numberOfCharacters;
+  Character[] characters;
+  Zombie zombie;
+
+  public CharacterManager(int numberOfCharacters){
+    this.numberOfCharacters = numberOfCharacters;
+  }
+
+  public void spawn(){
+    characters = new Character[numberOfCharacters];
+    for(int i = 0; i < numberOfCharacters - 1; i++){
+      characters[i] = new Human();
+    }
+    zombie = new Zombie();
+    characters[numberOfCharacters - 1] = zombie;
+  }
+
+  public void update(){
+    collision();
+
+    for(int i = 0; i < numberOfCharacters; i++){
+      characters[i].update();
+    }
+  }
+
+  public void collision(){
+    Zombie bittenZombie;
+    for(int i = 0; i < numberOfCharacters; i++){
+      if(!characters[i].isHuman()){
+        for(int j = 0; j < numberOfCharacters; j++){
+          if(characters[j].isHuman() &&
+             hasCollided(characters[i].position.x,
+                         characters[i].position.y,
+                         characters[i].size,
+
+                         characters[j].position.x,
+                         characters[j].position.y,
+                         characters[j].size) ) {
+            bittenZombie = new Zombie(characters[j].position.x,
+                                      characters[j].position.y);
+            characters[j] = bittenZombie;
+          }
+        }
+      }
+    }
+  }
+
+  public boolean hasCollided(float x1, float y1, float size1, float x2, float y2, float size2){
+    float maxDistance = size1 / 2 + size2 / 2;
+
+    if(abs(x1 - x2) > maxDistance || abs(y1 - y2) > maxDistance){
+      return false;
+    } else if(dist(x1, y1, x2, y2) > maxDistance) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+}
+class Human extends Character{
+
+  int c;
+
+  public Human(){
+    super();
+
+    switch((int)random(1, 5.99f)){
+          case 1:  c = color(255, 160, 122);
+          break;
+          case 2:  c = color(210, 180, 140);
+          break;
+          case 3:  c = color(255, 240, 245);
+          break;
+          case 4:  c = color(139, 69, 19);
+          break;
+          case 5:  c = color(255, 250, 205);
+          break;
+    }
+  }
+
+  public void draw(){
+    fill(c);
+    noStroke();
+    rect(position.x, position.y, size, size);
+    fill(255);
+    ellipse(position.x + (size * 0.25f), position.y + (size * 0.5f) , size * 0.5f, size * 0.5f);
+    ellipse(position.x + (size * 0.75f), position.y + (size * 0.5f) , size * 0.5f, size * 0.5f);
+    fill(0);
+    ellipse(position.x + (size * 0.5f) - 3, position.y + (size * 0.5f), 4, 4);
+    ellipse(position.x + (size * 0.5f) + 3, position.y + (size * 0.5f), 4, random(4, 6));
+  }
+}
+class Zombie extends Character{
+
+  PVector direction;
   int c = color(102, 205, 170);
 
   public Zombie(){
     super();
+    direction = new PVector();
+  }
+
+  public Zombie(float x, float y){
+    super(x, y);
+    direction = new PVector();
   }
 
   public void update(){
-    position.x += velocity.x * 0.5f;
-    position.y += velocity.y * 0.5f;
+    bounderies();
+    PVector closestHuman = new PVector();
+    closestHuman = whoIsClose(super.position);
+
+    direction.set(closestHuman.x - position.x,
+                  closestHuman.y - position.y);
+    direction.normalize();
+    position.add(direction);
+    // position.x += velocity.x * 0.5;
+    // position.y += velocity.y * 0.5;
 
     draw();
   }
 
   public void draw(){
-    
+
     fill(c);
     noStroke();
-    rect(position.x, position.y, size, size);
+    ellipse(position.x, position.y, size, size);
+    stroke(102, 225, 180);
+    strokeWeight(3);
+    line(position.x + size * 0.4f,
+         position.y,
+         position.x + direction.x * size * 0.75f + size * 0.4f,
+         position.y + direction.y * size * 0.75f);
+
+    line(position.x - size * 0.4f,
+         position.y,
+         position.x + direction.x * size * 0.75f - size * 0.4f,
+         position.y + direction.y * size * 0.75f);
   }
 
+  public boolean isHuman(){
+    return false;
+  }
 }
-  public void settings() {  size(500,500); }
+public PVector whoIsClose(PVector position){
+
+  PVector closestHuman = new PVector();
+  PVector closest;
+  float closestF = 1000;
+  float tempDist;
+  closest = new PVector(0, 0);
+
+  for(int i = 0; i < ralf.numberOfCharacters ; i++){
+    if(ralf.characters[i].isHuman()){
+
+      if((ralf.characters[i].position.x < position.x + 300 &&
+         ralf.characters[i].position.x > position.x - 300) &&
+        (ralf.characters[i].position.y < position.y + 300 &&
+         ralf.characters[i].position.y > position.y - 300)){
+
+         tempDist = dist(ralf.characters[i].position.x,
+                         ralf.characters[i].position.y,
+                         position.x,
+                         position.y);
+
+         if(tempDist < closestF){
+           closestF = tempDist;
+           closest.set(ralf.characters[i].position.x, ralf.characters[i].position.y) ;
+
+        }
+      }
+    }
+  }
+  return closestHuman.set(closest.x ,closest.y);
+}
+
+
+// try to make a syatem where the zombies
+//only check those closest and finds the distance...
+  public void settings() {  size(1000, 1000); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "ZombieApocalypse" };
     if (passedArgs != null) {
