@@ -31,5 +31,20 @@ PVector whoIsClose(PVector position){
 }
 
 
-// try to make a syatem where the zombies
-//only check those closest and finds the distance...
+// donsent work
+void gameOver(){
+  float endTime = 0;
+  PFont bloodFont;
+  bloodFont = createFont("bloodFont.otf", 76);
+  textFont(bloodFont);
+  fill(178, 34, 34);
+  textAlign(CENTER, BOTTOM);
+  if(ralf.areAllDead()){
+    if(!gameOver){
+      endTime = millis() * 0.001;
+      gameOver = true;
+    }
+    text("game over", 450, 200);
+    text("the viris took over in " + endTime + " seconds", 450, 280);
+  }
+}

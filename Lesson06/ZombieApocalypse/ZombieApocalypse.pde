@@ -1,5 +1,6 @@
 float tpf;
 float time;
+boolean gameOver = false;
 
 CharacterManager ralf;
 
@@ -15,6 +16,8 @@ void draw(){
   background(210);
 
   ralf.update();
+
+  gameOver();
 
   time = currentTime;
 }

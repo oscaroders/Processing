@@ -16,6 +16,7 @@ public class ZombieApocalypse extends PApplet {
 
 float tpf;
 float time;
+boolean gameOver = false;
 
 CharacterManager ralf;
 
@@ -31,6 +32,8 @@ public void draw(){
   background(210);
 
   ralf.update();
+
+  gameOver();
 
   time = currentTime;
 }
@@ -171,6 +174,20 @@ class CharacterManager{
       return true;
     }
   }
+
+  public boolean areAllDead(){
+    int numberOfHumans = 0;
+    for(int i = 0; i < numberOfCharacters; i++){
+      if(characters[i].isHuman()){
+        numberOfHumans++;
+      }
+    }
+    if(numberOfHumans == 0){
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 class Human extends Character{
 
@@ -289,9 +306,23 @@ public PVector whoIsClose(PVector position){
   return closestHuman.set(closest.x ,closest.y);
 }
 
+public void gameOver(){
+  float endTime = 0;
+  PFont bloodFont;
+  bloodFont = createFont("bloodFont.otf", 76);
+  textFont(bloodFont);
+  fill(178, 34, 34);
+  textAlign(CENTER, BOTTOM);
+  if(ralf.areAllDead()){
+    if(!gameOver){
+      endTime = millis() * 0.001f;
+      gameOver = true;
+      text("game over", 450, 200);
+      text("the viris took over in " + endTime + " seconds", 450, 280);
+    }
 
-// try to make a syatem where the zombies
-//only check those closest and finds the distance...
+  }
+}
   public void settings() {  size(1000, 1000); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "ZombieApocalypse" };

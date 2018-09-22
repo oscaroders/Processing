@@ -58,4 +58,18 @@ class CharacterManager{
       return true;
     }
   }
+
+  boolean areAllDead(){
+    int numberOfHumans = 0;
+    for(int i = 0; i < numberOfCharacters; i++){
+      if(characters[i].isHuman()){
+        numberOfHumans++;
+      }
+    }
+    if(numberOfHumans == 0){
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
