@@ -126,7 +126,7 @@ public void drawCourt(){
   //drawes the ball
   noStroke();
   fill(ballColor);
-  rect(x, y, ballDiam, ballDiam);
+  rect(x - ballDiam / 2, y - ballDiam / 2, ballDiam, ballDiam);
 
   //player1 paddle
   noStroke();
@@ -162,27 +162,27 @@ public void paddleMove() {
 }
 
 public void paddleRestriction() {
-  if (paddlePlayer1Y - paddleHeight / 2 < 0) {
+  if (paddlePlayer1Y  < 0) {
     paddlePlayer1Y += paddleSpeed;
   }
-  if (paddlePlayer1Y + paddleHeight / 2 > height) {
+  if (paddlePlayer1Y + paddleHeight > height) {
     paddlePlayer1Y -= paddleSpeed;
   }
-  if (paddlePlayer2Y - paddleHeight / 2 < 0) {
+  if (paddlePlayer2Y  < 0) {
     paddlePlayer2Y += paddleSpeed;
   }
-  if (paddlePlayer2Y + paddleHeight / 2 > height) {
+  if (paddlePlayer2Y + paddleHeight > height) {
     paddlePlayer2Y -= paddleSpeed;
   }
 }
 
 public void paddleBounce() {
-  if (x - ballDiam / 2 < paddlePlayer1X  && y - ballDiam / 2 < paddlePlayer1Y + paddleHeight && y + ballDiam / 2 > paddlePlayer1Y - paddleHeight / 2 ) {
+  if (x - ballDiam / 2 < paddlePlayer1X  && y - ballDiam / 2 < paddlePlayer1Y + paddleHeight && y + ballDiam / 2 > paddlePlayer1Y) {
     if (speedX < 0) {
       speedX *= reverse;
     }
   }
-  else if (x + ballDiam / 2 > paddlePlayer2X - paddleWidth / 2 && y - ballDiam / 2 < paddlePlayer2Y + paddleHeight / 2 && y + ballDiam / 2 > paddlePlayer2Y - paddleHeight / 2 ) {
+  else if (x + ballDiam / 2 > paddlePlayer2X - paddleWidth / 2 && y - ballDiam / 2 < paddlePlayer2Y + paddleHeight && y + ballDiam / 2 > paddlePlayer2Y) {
     if (speedX > 0) {
       speedX *= reverse;
     }
@@ -264,7 +264,7 @@ public void gameOverPage(String text, int c) {
   text("Press ENTER to play again", width/2, height/3 + 40);
   fill(c);
   text(text, width/2, height/3);
-  if(mousePressed) {
+  if(keyPressed == true && keyCode == ENTER) {
     player1.setScore(0);
     player2.setScore(0);
     speedX = 1;
