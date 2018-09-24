@@ -74,6 +74,7 @@ public class Player {
 boolean  gameStart;
 boolean upPlayer1, downPlayer1;
 boolean upPlayer2, downPlayer2;
+boolean gameOver = false;
 int ballColor = color(128, 128, 128);
 int player1Color = color(255, 0, 0);
 int player2Color  = color(0, 255, 0);
@@ -85,7 +86,7 @@ float paddlePlayer1X = 10, paddlePlayer1Y = windowHeight / 2;
 float paddlePlayer2X = windowWidth - paddleWidth -10, paddlePlayer2Y = windowHeight / 2;
 float speedX = (int)random(7, 9), speedY = (int)random(7, 9);
 float reverse = -1, x, y;
-float winScore = 10;
+float winScore = 10; // max 10!!
 
 public void setup(){
   
@@ -203,12 +204,12 @@ public void displayScore(){
 public void detectScore(){
   if ( x > width - ballDiam / 2) {
      gameStart = !gameStart;
-     speedX *= reverse;
+     speedX = (int)random(7, 9) * reverse;
      player1.scoreInc();
      setup();
   } else if ( x < 0 + ballDiam / 2) {
      gameStart = !gameStart;
-     speedX *= reverse;
+     speedX = (int)random(7, 9) * reverse;
      player2.scoreInc();
      setup();
   }
@@ -218,7 +219,7 @@ public void keyPressed(){
    if(keyCode == ENTER){
      gameStart = !gameStart;
    }
-   if (key == 'w' || key == 'W') {
+      if (key == 'w' || key == 'W') {
      upPlayer1 = true;
    }
    if (key == 's' || key == 'S') {
@@ -229,7 +230,15 @@ public void keyPressed(){
    }
    if (key == 'l' || key == 'L') {
      downPlayer2 = true;
- }
+   }
+   if(gameOver == true && keyCode == ENTER) {
+     println("enter");
+     player1.setScore(0);
+     player2.setScore(0);
+     speedX = (int)random(7, 9) * reverse;
+     speedY = (int)random(7, 9) * reverse;
+     setup();
+   }
 }
 
 public void keyReleased(){
@@ -264,12 +273,7 @@ public void gameOverPage(String text, int c) {
   text("Press ENTER to play again", width/2, height/3 + 40);
   fill(c);
   text(text, width/2, height/3);
-  if(keyPressed == true && keyCode == ENTER) {
-    player1.setScore(0);
-    player2.setScore(0);
-    speedX = 1;
-    speedY = 1;
-  }
+  gameOver = true;
 }
   public void settings() {  size(1000, 500); }
   static public void main(String[] passedArgs) {
