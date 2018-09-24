@@ -22,8 +22,6 @@ class Zombie extends Character{
                   closestHuman.y - position.y);
     direction.normalize();
     position.add(direction);
-    // position.x += velocity.x * 0.5;
-    // position.y += velocity.y * 0.5;
 
     draw();
   }

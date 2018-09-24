@@ -30,8 +30,6 @@ PVector whoIsClose(PVector position){
   return closestHuman.set(closest.x ,closest.y);
 }
 
-
-// donsent work
 void gameOver(){
   PFont bloodFont;
   bloodFont = createFont("bloodFont.otf", 76);
