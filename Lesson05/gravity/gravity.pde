@@ -19,7 +19,7 @@ void setup(){
 void draw(){
   int currentTime = millis();
   tpf = (currentTime - time) * 0.001f;
-  background(255);
+  background(0);
 
   planet.draw();
 
