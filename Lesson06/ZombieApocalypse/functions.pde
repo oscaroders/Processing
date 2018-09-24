@@ -33,18 +33,16 @@ PVector whoIsClose(PVector position){
 
 // donsent work
 void gameOver(){
-  float endTime = 0;
   PFont bloodFont;
   bloodFont = createFont("bloodFont.otf", 76);
   textFont(bloodFont);
   fill(178, 34, 34);
-  textAlign(CENTER, BOTTOM);
+  textAlign(CENTER, TOP);
   if(ralf.areAllDead()){
-    if(!gameOver){
-      endTime = millis() * 0.001;
-      gameOver = true;
-    }
-    text("game over", 450, 200);
-    text("the viris took over in " + endTime + " seconds", 450, 280);
+    if(endTime == 0)
+      endTime = round(currentTime * 0.001);
+
+    text("game over", width / 2, 200);
+    text("the virus took over\nin " + endTime + " seconds", width / 2, 320);
   }
 }

@@ -16,18 +16,20 @@ public class ZombieApocalypse extends PApplet {
 
 float tpf;
 float time;
-boolean gameOver = false;
+int endTime;
+int currentTime;
 
 CharacterManager ralf;
 
 public void setup(){
   
+  endTime = 0;
   ralf = new CharacterManager(99);
   ralf.spawn();
 }
 
 public void draw(){
-  int currentTime = millis();
+  currentTime = millis();
   tpf = (currentTime - time) * 0.001f;
   background(210);
 
@@ -43,6 +45,8 @@ public class Character{
   PVector velocity;
   float size;
   int c = color(0);
+  float maxSpeed = 3;
+  float minSpeed = 1;
 
   public Character(){
     position = new PVector();
@@ -50,21 +54,21 @@ public class Character{
     position.y = random(0, height);
 
     velocity = new PVector();
-    velocity.x = random(3, 5) * random(-1, 1);
-    velocity.y = random(3, 5) * random(-1, 1);
+    velocity.x = random(minSpeed,  maxSpeed) * random(-1, 1);
+    velocity.y = random(minSpeed,  maxSpeed) * random(-1, 1);
 
-    size = random(15, 18);
+    size = random(20, 25);
   }
 
   public Character(float x, float y){
     position = new PVector(x, y);
 
     velocity = new PVector();
-    velocity.x = random(3, 5) * random(-1, 1);
-    velocity.y = random(3, 5) * random(-1, 1);
+    velocity.x = random(minSpeed,  maxSpeed) * random(-1, 1);
+    velocity.y = random(minSpeed,  maxSpeed) * random(-1, 1);
 
-    size = random(15, 18);
-  }
+    size = random(20, 25);
+  } 
 
   public void update(){
     bounderies();
@@ -100,13 +104,13 @@ public class Character{
   public void timeToTurn(){
     int counter = millis();
     if(counter % 100 == (int)random(0,10)){
-      velocity.y = random(3, 5);
+      velocity.y = random(minSpeed,  maxSpeed);
     } else if(counter % 100 == (int)random(20,30)){
-      velocity.y = random(3, 5) * -1;
+      velocity.y = random(minSpeed,  maxSpeed) * -1;
     } else if(counter % 100 == (int)random(50,60)){
-      velocity.x = random(3, 5);
+      velocity.x = random(minSpeed,  maxSpeed);
     } else if(counter % 100 == (int)random(70,80)){
-      velocity.x = random(3, 5) * -1;
+      velocity.x = random(minSpeed,  maxSpeed) * -1;
     }
   }
 
@@ -306,21 +310,20 @@ public PVector whoIsClose(PVector position){
   return closestHuman.set(closest.x ,closest.y);
 }
 
+
+// donsent work
 public void gameOver(){
-  float endTime = 0;
   PFont bloodFont;
   bloodFont = createFont("bloodFont.otf", 76);
   textFont(bloodFont);
   fill(178, 34, 34);
-  textAlign(CENTER, BOTTOM);
+  textAlign(CENTER, TOP);
   if(ralf.areAllDead()){
-    if(!gameOver){
-      endTime = millis() * 0.001f;
-      gameOver = true;
-      text("game over", 450, 200);
-      text("the viris took over in " + endTime + " seconds", 450, 280);
-    }
+    if(endTime == 0)
+      endTime = round(currentTime * 0.001f);
 
+    text("game over", width / 2, 200);
+    text("the virus took over\nin " + endTime + " seconds", width / 2, 320);
   }
 }
   public void settings() {  size(1000, 1000); }

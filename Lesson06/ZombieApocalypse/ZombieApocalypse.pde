@@ -1,17 +1,19 @@
 float tpf;
 float time;
-boolean gameOver = false;
+int endTime;
+int currentTime;
 
 CharacterManager ralf;
 
 void setup(){
   size(1000, 1000);
+  endTime = 0;
   ralf = new CharacterManager(99);
   ralf.spawn();
 }
 
 void draw(){
-  int currentTime = millis();
+  currentTime = millis();
   tpf = (currentTime - time) * 0.001f;
   background(210);
 
