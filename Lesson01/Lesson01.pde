@@ -216,8 +216,3 @@ void scanLines(){
 
    frame++;
 }
-
-
-
-
-// kolla om man kan få PAC att äta i loop... och lite fortare... med modulus.
