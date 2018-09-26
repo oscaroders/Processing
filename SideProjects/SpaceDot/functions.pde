@@ -31,3 +31,14 @@ void displayScore(){
   fill(scoreTextGreen);
   text("score: " + paul.dot.score, width / 2, 10);
 }
+
+void gameOver(){
+  fill(255);
+  textAlign(CENTER, TOP);
+  if(gameOver){
+    if(endTime == 0)
+      endTime = round(currentTime * 0.001);
+    text("game over", width / 2, 200);
+    text("You survived the cold space \nin " + endTime + " seconds", width / 2, 320);
+  }
+}

@@ -15,22 +15,26 @@ import java.io.IOException;
 public class SpaceDot extends PApplet {
 
 float tpf, time;
-int currentTime, backgcount;
+int currentTime, backgcount, endTime;
 
-boolean firstItt;
+boolean firstItt, gameOver;
 PVector[] starPos;
-int numberOfStars;
+int numberOfStars, numberOfMissiles;
 
 ObjectManager paul;
 
 public void setup(){
   
   firstItt = true;
+  gameOver = false;
+  endTime = 0;
   backgcount = 0;
-  numberOfStars = 50;
+  numberOfStars = 1000;
   starPos = new PVector[numberOfStars];
   paul = new ObjectManager();
   paul.spawnDot("Steve");
+  numberOfMissiles = 60;
+  paul.spawnMissile(numberOfMissiles);
 }
 
 public void draw(){
@@ -40,6 +44,7 @@ public void draw(){
 
   paul.update();
   displayScore();
+  gameOver();
 
   if(firstItt){
     firstItt = false;
@@ -83,42 +88,71 @@ class Missile{
   PVector position;
   int side;
   int size;
+  float speed;
+  float maxOffset = height;
 
   public Missile(int side){
     this.side = side;
     if(this.side == 1)
-      position = new PVector(0, random(10, height - 10));
+      position = new PVector(random(-maxOffset, 0), random(10, height - 10));
     if(this.side == 2)
-      position = new PVector(random(10, width - 10), 0);
+      position = new PVector(random(10, width - 10), random(-maxOffset, 0));
     if(this.side == 3)
-      position = new PVector(width, random(10, height - 10));
+      position = new PVector(random(width + maxOffset), random(10, height - 10));
     if(this.side == 4)
-      position = new PVector(random(10, width - 10), height);
+      position = new PVector(random(10, width - 10), random(height + maxOffset));
     if(this.side > 4)
       position = new PVector(0, height / 2);
 
-    size = 5;
+    size = 15;
+    speed = 100;
   }
 
   public void update(){
+    if(this.side == 1)
+      position.set(position.x + speed * tpf, position.y);
+    if(this.side == 2)
+      position.set(position.x, position.y + speed * tpf);
+    if(this.side == 3)
+      position.set(position.x - speed * tpf, position.y);
+    if(this.side == 4)
+      position.set(position.x, position.y - speed * tpf);
+    if(this.side > 4)
+      position.set(position.x, position.y + speed * tpf);
 
+    bounduries();
+    draw();
   }
 
   public void draw(){
+    fill(0);
     if(side == 1 || side == 3){
-      rect(position.x, position.y, size, size * 2);
-    } else if(side == 2 || side == 4){
       rect(position.x, position.y, size * 2, size);
+    } else if(side == 2 || side == 4){
+      rect(position.x, position.y, size, size * 2);
     } else {
       rect(position.x, position.y, size, size * 2);
     }
+  }
+
+  public void bounduries(){
+    if(position.x > width)
+      position.set(0, position.y);
+    if(position.x < 0)
+      position.set(width, position.y);
+    if(position.y > height)
+      position.set(position.x, 0);
+    if(position.x < 0)
+      position.set(position.x, height);
   }
 
 }
 class ObjectManager{
 
   SpaceFruit apple;
+  Missile[] missy;
   Dot dot;
+
 
   public ObjectManager(){
 
@@ -126,6 +160,13 @@ class ObjectManager{
 
   public void spawnFruit(){
     apple = new SpaceFruit();
+  }
+
+  public void spawnMissile(int numberOfMissiles){
+    missy = new Missile[numberOfMissiles];
+      for(int i = 0; i < numberOfMissiles; i++){
+        missy[i] = new Missile((int)random(1, 5));
+      }
   }
 
   public void spawnDot(String name){
@@ -141,11 +182,15 @@ class ObjectManager{
                             apple.position.y,
                             apple.size)){
       spawnFruit();
+
     }
+
 
     apple.draw();
     dot.update();
     eatFruit();
+    shootMissile();
+    collision();
   }
 
   public void eatFruit(){
@@ -162,6 +207,26 @@ class ObjectManager{
 
   public boolean hasEaten(float x1, float y1, float size1, float x2, float y2, float size2){
     return hasCollided(x1, y1, size1, x2, y2, size2);
+  }
+
+  public void shootMissile(){
+    for(int i = 0; i < numberOfMissiles; i++){
+      missy[i].update();
+    }
+  }
+
+  public void collision(){
+    for(int i = 0; i < numberOfMissiles; i++){
+      if(hasCollided(dot.position.x,
+                     dot.position.y,
+                     dot.size,
+
+                     missy[i].position.x,
+                     missy[i].position.y,
+                     missy[i].size)){
+        gameOver = true;
+      }
+    }
   }
 
   public boolean hasCollided(float x1, float y1, float size1, float x2, float y2, float size2){
@@ -231,7 +296,18 @@ public void displayScore(){
   fill(scoreTextGreen);
   text("score: " + paul.dot.score, width / 2, 10);
 }
-  public void settings() {  size(1000, 500); }
+
+public void gameOver(){
+  fill(255);
+  textAlign(CENTER, TOP);
+  if(gameOver){
+    if(endTime == 0)
+      endTime = round(currentTime * 0.001f);
+    text("game over", width / 2, 200);
+    text("You survived the cold space \nin " + endTime + " seconds", width / 2, 320);
+  }
+}
+  public void settings() {  size(1900, 1000); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "SpaceDot" };
     if (passedArgs != null) {
