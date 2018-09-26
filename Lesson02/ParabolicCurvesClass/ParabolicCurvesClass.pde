@@ -12,12 +12,6 @@ public class ParabolicCurve {
   }
 
   public void drawParabolicCurve(){
-        /*loat xDistanceForX = (axisX.x2 - axisX.x1)/numberOfLines;
-        float yDistanceForX = (axisX.y2 - axisX.y1)/numberOfLines;
-
-        float xDistanceForY = (axisY.x2 - axisY.x1)/numberOfLines;
-        float yDistanceForY = (axisY.y2 - axisY.y1)/numberOfLines;*/
-
 
         for(int i = 0; i < numberOfLines; i++){
 
@@ -29,11 +23,11 @@ public class ParabolicCurve {
             stroke(0, 255, 0);
           }
 
-          float lineX1 = distance(axisX, 'x', i);//axisX.x1 + (i * xDistanceForX);
-          float lineY1 = distance(axisX, 'y', i);//axisX.y1 + (i * yDistanceForX);
+          float lineX1 = distance(axisX, 'x', i);
+          float lineY1 = distance(axisX, 'y', i);
 
-          float lineX2 = distance(axisY, 'x', i);//axisY.x1 + (i * xDistanceForY);
-          float lineY2 = distance(axisY, 'y', i);//axisY.y1 + (i * yDistanceForY);
+          float lineX2 = distance(axisY, 'x', i);
+          float lineY2 = distance(axisY, 'y', i);
 
           line(lineX1, lineY1, lineX2, lineY2);
 
