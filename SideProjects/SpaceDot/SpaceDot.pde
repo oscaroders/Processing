@@ -5,7 +5,7 @@ boolean firstItt;
 PVector[] starPos;
 int numberOfStars;
 
-Dot dot;
+ObjectManager paul;
 
 void setup(){
   size(1000, 500);
@@ -13,7 +13,8 @@ void setup(){
   backgcount = 0;
   numberOfStars = 50;
   starPos = new PVector[numberOfStars];
-  dot = new Dot("Steve");
+  paul = new ObjectManager();
+  paul.spawnDot("Steve");
 }
 
 void draw(){
@@ -21,7 +22,8 @@ void draw(){
   tpf = (currentTime - time) * 0.001f;
   drawBackground();
 
-  dot.update();
+  paul.update();
+  displayScore();
 
   if(firstItt){
     firstItt = false;

@@ -24,3 +24,10 @@ void generateBackground(){
                              random(0, height));
   }
 }
+
+void displayScore(){
+  textAlign(CENTER,TOP);
+  textSize(40);
+  fill(lightYellow);
+  text("score: " + paul.dot.score, width / 2, 10);
+}

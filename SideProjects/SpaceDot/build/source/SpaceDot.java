@@ -21,7 +21,7 @@ boolean firstItt;
 PVector[] starPos;
 int numberOfStars;
 
-Dot dot;
+ObjectManager paul;
 
 public void setup(){
   
@@ -29,7 +29,8 @@ public void setup(){
   backgcount = 0;
   numberOfStars = 50;
   starPos = new PVector[numberOfStars];
-  dot = new Dot("Steve");
+  paul = new ObjectManager();
+  paul.spawnDot("Steve");
 }
 
 public void draw(){
@@ -37,7 +38,8 @@ public void draw(){
   tpf = (currentTime - time) * 0.001f;
   drawBackground();
 
-  dot.update();
+  paul.update();
+  displayScore();
 
   if(firstItt){
     firstItt = false;
@@ -71,6 +73,11 @@ class Dot{
     fill(spaceDotPurple);
     ellipse(position.x ,position.y, size, size);
   }
+
+  public void incScore(){
+    score++;
+    println("klorry");
+  }
 }
 class Missile{
 
@@ -80,20 +87,86 @@ class Missile{
 }
 class ObjectManager{
 
+  SpaceFruit apple;
+  Dot dot;
+
   public ObjectManager(){
-    
+
+  }
+
+  public void spawnFruit(){
+    apple = new SpaceFruit();
+  }
+
+  public void spawnDot(String name){
+    dot = new Dot(name);
+  }
+
+  public void update(){
+    if(firstItt || hasEaten(dot.position.x,
+                            dot.position.y,
+                            dot.size,
+
+                            apple.position.x,
+                            apple.position.y,
+                            apple.size)){
+      spawnFruit();
+    }
+
+    apple.draw();
+    dot.update();
+    eatFruit();
+  }
+
+  public void eatFruit(){
+    if(hasEaten(dot.position.x,
+                dot.position.y,
+                dot.size,
+
+                apple.position.x,
+                apple.position.y,
+                apple.size)){
+      dot.incScore();
+    }
+  }
+
+  public boolean hasEaten(float x1, float y1, float size1, float x2, float y2, float size2){
+    return hasCollided(x1, y1, size1, x2, y2, size2);
+  }
+
+  public boolean hasCollided(float x1, float y1, float size1, float x2, float y2, float size2){
+    float maxDistance = size1 / 2 + size2 / 2;
+
+    if(abs(x1 - x2) > maxDistance || abs(y1 - y2) > maxDistance){
+      return false;
+    } else if(dist(x1, y1, x2, y2) > maxDistance) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
 class SpaceFruit{
+  PVector position;
+  float size;
 
   public SpaceFruit(){
-    
+    position = new PVector(random(10, width - 10),
+                           random(10, height - 10));
+    size = 10;
+  }
+
+  public void draw(){
+    noStroke();
+    fill(spaceAppleRed);
+    ellipse(position.x, position.y, size, size);
   }
 }
 int yellow = color(255, 255, 102);
 int lightYellow = color(255, 255, 204);
 int spaceBlue = color(12, 36, 39);
 int spaceDotPurple = color(102, 0, 102);
+int spaceAppleRed = color(255, 77, 77);
 public void drawBackground(){
   background(spaceBlue);
 
@@ -119,6 +192,13 @@ public void generateBackground(){
     starPos[i] = new PVector(random(0, width),
                              random(0, height));
   }
+}
+
+public void displayScore(){
+  textAlign(CENTER,TOP);
+  textSize(40);
+  fill(lightYellow);
+  text("score: " + paul.dot.score, width / 2, 10);
 }
   public void settings() {  size(1000, 500); }
   static public void main(String[] passedArgs) {

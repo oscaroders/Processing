@@ -25,4 +25,9 @@ class Dot{
     fill(spaceDotPurple);
     ellipse(position.x ,position.y, size, size);
   }
+
+  void incScore(){
+    score++;
+    println("klorry");
+  }
 }
