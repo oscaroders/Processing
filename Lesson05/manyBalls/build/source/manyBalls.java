@@ -56,6 +56,10 @@ public class Ball{
     if(this.pos.x > windowWidth){
       this.setPos(0, this.pos.y);
     }
+
+    if(this.pos.x < 0){
+      this.setPos(windowWidth, this.pos.y);
+    }
   }
 
 
