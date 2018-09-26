@@ -103,9 +103,9 @@ public void draw(){
 OVector vec3 = vec2.multi(2);
 strokeWeight(20);
 stroke(0);
-if(vec1.isOrto(vec2))
+
 point(vec3.xValue, vec3.yValue);
-else
+
 point(vec2.xValue, vec2.yValue);
 
 }
