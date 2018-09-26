@@ -1,5 +1,5 @@
 class Dot{
-  PVector position;
+  PVector position, move;
   int score;
   String name;
   float size;
@@ -7,20 +7,22 @@ class Dot{
   public Dot(String name){
     this.name = name;
     position = new PVector(width / 2, height / 2);
+    move = new PVector(position.x, position.y);
     size = 30;
     score = 0;
   }
 
   void update(){
-    position.set(mouseX, mouseY);
+    move.set((mouseX - position.x) * tpf, (mouseY - position.y) * tpf);
+    move.normalize();
+    position.add(move);
+
+    draw();
   }
 
   void draw(){
+    noStroke();
     fill(spaceDotPurple);
     ellipse(position.x ,position.y, size, size);
-    fill(spaceDotPurple, 100);
-    ellipse(pmouseX + size * 0.25 ,pmouseY + size * 0.25, size, size);
-    fill(spaceDotPurple, 200);
-    ellipse(pmouseX + size * 0.50 ,pmouseY + size * 0.50, size, size);
   }
 }

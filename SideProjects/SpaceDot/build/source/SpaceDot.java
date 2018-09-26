@@ -14,10 +14,14 @@ import java.io.IOException;
 
 public class SpaceDot extends PApplet {
 
+float tpf, time;
+int currentTime, backgcount;
+
 boolean firstItt;
 PVector[] starPos;
 int numberOfStars;
-int backgcount;
+
+Dot dot;
 
 public void setup(){
   
@@ -25,17 +29,23 @@ public void setup(){
   backgcount = 0;
   numberOfStars = 50;
   starPos = new PVector[numberOfStars];
+  dot = new Dot("Steve");
 }
 
 public void draw(){
+  currentTime = millis();
+  tpf = (currentTime - time) * 0.001f;
   drawBackground();
+
+  dot.update();
 
   if(firstItt){
     firstItt = false;
   }
+  time = currentTime;
 }
 class Dot{
-  PVector position;
+  PVector position, move;
   int score;
   String name;
   float size;
@@ -43,15 +53,21 @@ class Dot{
   public Dot(String name){
     this.name = name;
     position = new PVector(width / 2, height / 2);
+    move = new PVector(position.x, position.y);
     size = 30;
     score = 0;
   }
 
   public void update(){
+    move.set((mouseX - position.x) * tpf, (mouseY - position.y) * tpf);
+    move.normalize();
+    position.add(move);
 
+    draw();
   }
 
   public void draw(){
+    noStroke();
     fill(spaceDotPurple);
     ellipse(position.x ,position.y, size, size);
   }
