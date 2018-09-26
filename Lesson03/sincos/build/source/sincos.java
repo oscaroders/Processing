@@ -38,7 +38,6 @@ public void draw()
          point(i * pointDistance, height/2 + cos((i + frame) * multiplier) * 200);
     }
     frame++;
-
 }
   public void settings() { 	size(640, 480); }
   static public void main(String[] passedArgs) {
