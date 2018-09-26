@@ -1,0 +1,6 @@
+class ObjectManager{
+
+  public ObjectManager(){
+    
+  }
+}

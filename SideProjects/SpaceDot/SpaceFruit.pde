@@ -1,0 +1,6 @@
+class SpaceFruit{
+
+  public SpaceFruit(){
+    
+  }
+}
