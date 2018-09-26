@@ -28,6 +28,6 @@ void generateBackground(){
 void displayScore(){
   textAlign(CENTER,TOP);
   textSize(40);
-  fill(lightYellow);
+  fill(scoreTextGreen);
   text("score: " + paul.dot.score, width / 2, 10);
 }

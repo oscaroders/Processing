@@ -76,14 +76,44 @@ class Dot{
 
   public void incScore(){
     score++;
-    println("klorry");
   }
 }
 class Missile{
 
-  public Missile(){
-    
+  PVector position;
+  int side;
+  int size;
+
+  public Missile(int side){
+    this.side = side;
+    if(this.side == 1)
+      position = new PVector(0, random(10, height - 10));
+    if(this.side == 2)
+      position = new PVector(random(10, width - 10), 0);
+    if(this.side == 3)
+      position = new PVector(width, random(10, height - 10));
+    if(this.side == 4)
+      position = new PVector(random(10, width - 10), height);
+    if(this.side > 4)
+      position = new PVector(0, height / 2);
+
+    size = 5;
   }
+
+  public void update(){
+
+  }
+
+  public void draw(){
+    if(side == 1 || side == 3){
+      rect(position.x, position.y, size, size * 2);
+    } else if(side == 2 || side == 4){
+      rect(position.x, position.y, size * 2, size);
+    } else {
+      rect(position.x, position.y, size, size * 2);
+    }
+  }
+
 }
 class ObjectManager{
 
@@ -167,6 +197,7 @@ int lightYellow = color(255, 255, 204);
 int spaceBlue = color(12, 36, 39);
 int spaceDotPurple = color(102, 0, 102);
 int spaceAppleRed = color(255, 77, 77);
+int scoreTextGreen = color(0, 102, 0);
 public void drawBackground(){
   background(spaceBlue);
 
@@ -197,7 +228,7 @@ public void generateBackground(){
 public void displayScore(){
   textAlign(CENTER,TOP);
   textSize(40);
-  fill(lightYellow);
+  fill(scoreTextGreen);
   text("score: " + paul.dot.score, width / 2, 10);
 }
   public void settings() {  size(1000, 500); }

@@ -28,6 +28,5 @@ class Dot{
 
   void incScore(){
     score++;
-    println("klorry");
   }
 }
