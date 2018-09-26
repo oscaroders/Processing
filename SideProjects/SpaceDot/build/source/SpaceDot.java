@@ -35,9 +35,25 @@ public void draw(){
   }
 }
 class Dot{
+  PVector position;
+  int score;
+  String name;
+  float size;
 
-  public Dot(){
+  public Dot(String name){
+    this.name = name;
+    position = new PVector(width / 2, height / 2);
+    size = 30;
+    score = 0;
+  }
 
+  public void update(){
+
+  }
+
+  public void draw(){
+    fill(spaceDotPurple);
+    ellipse(position.x ,position.y, size, size);
   }
 }
 class Missile{
@@ -61,6 +77,7 @@ class SpaceFruit{
 int yellow = color(255, 255, 102);
 int lightYellow = color(255, 255, 204);
 int spaceBlue = color(12, 36, 39);
+int spaceDotPurple = color(102, 0, 102);
 public void drawBackground(){
   background(spaceBlue);
 
