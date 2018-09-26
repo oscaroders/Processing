@@ -1,14 +1,20 @@
-drawBackground(){
-  background(0);
+void drawBackground(){
+  background(spaceBlue);
 
   if(firstItt){
     generateBackground();
   }
 
   for(int i = 0; i < numberOfStars; i++){
-    stroke(255);
-    strokeWeight(3);
+    if(backgcount % (int)random(7, 23) == 0){
+      stroke(lightYellow);
+      strokeWeight(random(2, 5));
+    } else {
+      stroke(yellow);
+      strokeWeight(2);
+    }
     point(starPos[i].x, starPos[i].y);
+    backgcount++;
   }
 }
 
