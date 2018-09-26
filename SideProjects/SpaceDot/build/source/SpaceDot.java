@@ -29,7 +29,7 @@ public void setup(){
   gameOver = false;
   endTime = 0;
   backgcount = 0;
-  numberOfStars = 1000;
+  numberOfStars = 500;
   starPos = new PVector[numberOfStars];
   paul = new ObjectManager();
   paul.spawnDot("Steve");
