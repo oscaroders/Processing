@@ -27,7 +27,7 @@ public class Character{
     velocity.y = random(minSpeed,  maxSpeed) * random(-1, 1);
 
     size = random(20, 25);
-  } 
+  }
 
   void update(){
     bounderies();
@@ -48,15 +48,15 @@ public class Character{
 
   void bounderies(){
     if(position.x < 0)
-      position.x = height;
+      position.x = width;
 
-    if(position.x > height)
+    if(position.x > width)
       position.x = 0;
 
     if(position.y < 0)
-      position.y = width;
+      position.y = height;
 
-    if(position.y > width)
+    if(position.y > height)
       position.y = 0;
   }
 

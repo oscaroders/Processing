@@ -6,9 +6,9 @@ int currentTime;
 CharacterManager ralf;
 
 void setup(){
-  size(1000, 1000);
+  size(1500, 1000);
   endTime = 0;
-  ralf = new CharacterManager(99);
+  ralf = new CharacterManager(300);
   ralf.spawn();
 }
 

@@ -24,7 +24,7 @@ CharacterManager ralf;
 public void setup(){
   
   endTime = 0;
-  ralf = new CharacterManager(99);
+  ralf = new CharacterManager(300);
   ralf.spawn();
 }
 
@@ -68,7 +68,7 @@ public class Character{
     velocity.y = random(minSpeed,  maxSpeed) * random(-1, 1);
 
     size = random(20, 25);
-  } 
+  }
 
   public void update(){
     bounderies();
@@ -89,15 +89,15 @@ public class Character{
 
   public void bounderies(){
     if(position.x < 0)
-      position.x = height;
+      position.x = width;
 
-    if(position.x > height)
+    if(position.x > width)
       position.x = 0;
 
     if(position.y < 0)
-      position.y = width;
+      position.y = height;
 
-    if(position.y > width)
+    if(position.y > height)
       position.y = 0;
   }
 
@@ -322,7 +322,7 @@ public void gameOver(){
     text("the virus took over\nin " + endTime + " seconds", width / 2, 320);
   }
 }
-  public void settings() {  size(1000, 1000); }
+  public void settings() {  size(1500, 1000); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "ZombieApocalypse" };
     if (passedArgs != null) {
