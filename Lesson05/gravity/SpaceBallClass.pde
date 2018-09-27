@@ -2,10 +2,12 @@ class SpaceBall{
 
   PVector position;
   PVector velocity;
+  PVector distanceBetween;
   color c;
   float diam = 10;
   float distanceBetweenX, distanceBetweenY;
   boolean timeToTurn;
+  float acc = 5;
 
   public SpaceBall(){
     position = new PVector();
@@ -15,6 +17,8 @@ class SpaceBall{
     velocity = new PVector();
     velocity.x = random(1, 2);
     velocity.y = random(1, 2);
+
+    distanceBetween = new PVector();
 
     c = color(random(10, 245),
               random(10, 245),
@@ -30,6 +34,8 @@ class SpaceBall{
     velocity.x = random(0.1, 2);
     velocity.y = random(0.1, 2);
 
+    distanceBetween = new PVector();
+
     this.c = c;
   }
 
@@ -39,6 +45,8 @@ class SpaceBall{
     velocity = new PVector();
     velocity.x = random(0.1, 2);
     velocity.y = random(0.1, 2);
+
+    distanceBetween = new PVector();
 
     c = color(random(10, 245),
               random(10, 245),
@@ -64,49 +72,18 @@ class SpaceBall{
   }
 
   void update(){
-    bounderis();
 
     distanceBetween();
 
-    position.x -= (distanceBetweenX * tpf);
-    position.y -= (distanceBetweenY * tpf);
-  }
-
-  void bounderis(){
-    if(position.x < 0){
-      //position.x *= -1;
-      timeToTurn = false;
-    }
-    if(position.y < 0){
-      //position.y *= -1;
-      timeToTurn = false;
-    }
-    if(position.x > width){
-      //position.x *= -1;
-      timeToTurn = false;
-    }
-    if(position.y > height){
-      //position.y *= -1;
-      timeToTurn = false;
-    }
+    position.add(distanceBetween);
   }
 
   void distanceBetween(){
-    timeToTurn();
 
-    if(timeToTurn){
-      distanceBetweenX = (position.x - planet.position.x) * -1;
-      distanceBetweenY = (position.y - planet.position.y) * -1;
-    } else {
-      distanceBetweenX = (position.x - planet.position.x);
-      distanceBetweenY = (position.y - planet.position.y);
-    }
-  }
 
-  void timeToTurn(){
-    if((distanceBetweenX < 5 && distanceBetweenX > -5)
-        && (distanceBetweenY < 5 && distanceBetweenY > -5)){
-      timeToTurn = true;
-    }
+    distanceBetween.set((position.x - planet.position.x) * -1, (position.y - planet.position.y) * -1);
+
+    distanceBetween.normalize();
+
   }
 }
