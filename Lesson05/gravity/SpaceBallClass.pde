@@ -74,6 +74,8 @@ class SpaceBall{
   void update(){
 
     distanceBetween();
+
+  //  distanceBetween.mult(distanceBetween.mag() * tpf);
     velocity.add(distanceBetween);
     position.add(velocity);
   }
