@@ -74,12 +74,11 @@ class SpaceBall{
   void update(){
 
     distanceBetween();
-
-    position.add(distanceBetween);
+    velocity.add(distanceBetween);
+    position.add(velocity);
   }
 
   void distanceBetween(){
-
 
     distanceBetween.set((position.x - planet.position.x) * -1, (position.y - planet.position.y) * -1);
 
