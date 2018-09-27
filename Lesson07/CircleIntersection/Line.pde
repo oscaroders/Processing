@@ -1,6 +1,7 @@
 //http://processingjs.org/learning/custom/intersect/
 public class Line extends Shape{
   public PVector dest;
+  float intersX, intersY;
 
   public Line(float x, float y, float x2, float y2){
     super(x, y);
@@ -14,6 +15,7 @@ public class Line extends Shape{
   }
 
   public boolean intersectsLine(Line other){
+
     //Compute own lines in standard form a, b, c
     float a1 = dest.y - pos.y;
     float b1 = pos.x - dest.x;
@@ -46,6 +48,37 @@ public class Line extends Shape{
     if ((a1 * b2) - (a2 * b1) == 0) {
       return false;
     }
+
+    float denom, offset, num;
+    //Line segments intersect: compute intersection point.
+     denom = (a1 * b2) - (a2 * b1);
+
+     if (denom == 0) {
+       return false;
+     }
+
+     if (denom < 0){
+       offset = -denom / 2;
+     }
+     else {
+       offset = denom / 2 ;
+     }
+
+     num = (b1 * c2) - (b2 * c1);
+     if (num < 0){
+       intersX = (num - offset) / denom;
+     }
+     else {
+       intersX = (num + offset) / denom;
+     }
+
+     num = (a2 * c1) - (a1 * c2);
+     if (num < 0){
+       intersY = ( num - offset) / denom;
+     }
+     else {
+       intersY = (num + offset) / denom;
+     }
 
     //If at this point, do intersect
     return true;

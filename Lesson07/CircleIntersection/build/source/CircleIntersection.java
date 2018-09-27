@@ -34,7 +34,7 @@ public void setup(){
   box2 = new Box(430, 220, 60, 40);
 
   line1 = new Line(10, 10, width - 10, height - 10);
-  line2 = new Line(width - 10, 10, 10, height - 10);
+  line2 = new Line(width - 10, 10, 10, height - 200);
 
   player = new MultiBox(400, 141, 40, 80);
 
@@ -56,6 +56,12 @@ public void draw(){
 
   for(int i = 0; i < shapes.size(); i++){
     shapes.get(i).update(_dt);
+  }
+
+  if(line1.intersectsLine(line2)){
+    fill(255, 0, 0);
+    ellipse(line1.intersX, line1.intersY, 5, 5);
+    fill(255);
   }
 
   //println(circ1.intersectsCircle(circ2));
@@ -168,6 +174,7 @@ public class Circle extends Shape{
 //http://processingjs.org/learning/custom/intersect/
 public class Line extends Shape{
   public PVector dest;
+  float intersX, intersY;
 
   public Line(float x, float y, float x2, float y2){
     super(x, y);
@@ -181,6 +188,7 @@ public class Line extends Shape{
   }
 
   public boolean intersectsLine(Line other){
+
     //Compute own lines in standard form a, b, c
     float a1 = dest.y - pos.y;
     float b1 = pos.x - dest.x;
@@ -213,6 +221,40 @@ public class Line extends Shape{
     if ((a1 * b2) - (a2 * b1) == 0) {
       return false;
     }
+
+    float denom, offset, num;
+    //Line segments intersect: compute intersection point.
+     denom = (a1 * b2) - (a2 * b1);
+
+     if (denom == 0) {
+       return false;
+     }
+
+     if (denom < 0){
+       offset = -denom / 2;
+     }
+     else {
+       offset = denom / 2 ;
+     }
+
+     // The denom/2 is to get rounding instead of truncating. It
+     // is added or subtracted to the numerator, depending upon the
+     // sign of the numerator.
+     num = (b1 * c2) - (b2 * c1);
+     if (num < 0){
+       intersX = (num - offset) / denom;
+     }
+     else {
+       intersX = (num + offset) / denom;
+     }
+
+     num = (a2 * c1) - (a1 * c2);
+     if (num < 0){
+       intersY = ( num - offset) / denom;
+     }
+     else {
+       intersY = (num + offset) / denom;
+     }
 
     //If at this point, do intersect
     return true;

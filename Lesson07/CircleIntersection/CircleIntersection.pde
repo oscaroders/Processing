@@ -42,6 +42,12 @@ public void draw(){
     shapes.get(i).update(_dt);
   }
 
+  if(line1.intersectsLine(line2)){
+    fill(255, 0, 0);
+    ellipse(line1.intersX, line1.intersY, 5, 5);
+    fill(255);
+  }
+
   //println(circ1.intersectsCircle(circ2));
   //println(box1.intersectsBox(box2));
   //println(line1.intersectsLine(line2));
