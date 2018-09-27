@@ -13,7 +13,7 @@ void setup(){
     balls[i] = new SpaceBall();
   }
   //ball = new SpaceBall(1,1);
-  planet = new Planet(width / 2, height / 2);
+  planet = new Planet();
 }
 
 void draw(){
