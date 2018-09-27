@@ -1,7 +1,7 @@
 float tpf;
 float time;
 
-int numberOfBalls = 500;
+int numberOfBalls = 5;
 SpaceBall[] balls;
 Planet planet;
 //SpaceBall ball;
