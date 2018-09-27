@@ -15,11 +15,16 @@ import java.io.IOException;
 public class circle extends PApplet {
 
 float frame = 0;
-float multiplier = 0.04f;
 int numberOfPoints = 20;
-int widthisch = 640;
 int cirkleRad = 50;
-int pointDistance = (widthisch/numberOfPoints) + 1;
+float coils = 4;
+float maxAngle = coils * PI * 2;
+float steps = cirkleRad / maxAngle;
+float distanceBetweenPoint = 1;
+
+
+float rotation = 1;
+
 
 public void setup()
 {
@@ -30,11 +35,19 @@ public void setup()
 public void draw()
 {
 	background(255);
-  int[] center = {320, 240};
+  int[] center1 = {width / 4, 240};
+	int[] center2 = {3 * width / 4, 240};
 
     for(float angle = 0; radians(angle) < 2*PI; angle += 360/numberOfPoints){
-      point(center[0] + cos(radians(angle + frame)) * cirkleRad, center[1] + (sin(radians(angle + frame)) * cirkleRad));
+      point(center1[0] + cos(radians(angle + frame)) * cirkleRad, center1[1] + (sin(radians(angle + frame)) * cirkleRad));
 			frame++;
+		}
+
+		for(float angle = 0; radians(angle) < maxAngle; angle ++){
+			float away = angle * 0.1f;
+			point(center2[0] + cos(radians(angle)) * away,
+						center2[1] + (sin(radians(angle)) * away));
+
 		}
 }
   public void settings() { 	size(640, 480); }
