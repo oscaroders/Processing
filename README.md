@@ -11,6 +11,7 @@
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson04/ballBounce/ballBounce.pde">Lesson04 - Ball with bounce</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/bouncingBall/bouncingBall.pde">Lesson05 - Bouncing ball with acceleration!</a></li>
   <li><a href="https://github.com/oscaroders/Processing/tree/master/Lesson06/ZombieApocalypse">Lesson06 - Zombie apocalypse!</a></li>
+  <li><a href="https://github.com/oscaroders/Processing/tree/master/Lesson09/GameOfLife">Lesson09 - Game of Life</a></li>
 </ul>
 
 <h3> Extra assignments </h3>
