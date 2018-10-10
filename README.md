@@ -22,6 +22,7 @@
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/manyBalls/manyBalls.pde">Lesson05 - Many bouncing balls</a></li>
   <li><a href="https://github.com/oscaroders/Processing/blob/master/Lesson05/gravity/gravity.pde">Lesson05 - gravity or rather the opposite</a></li>
   <li><a href="https://github.com/oscaroders/Processing/tree/master/Lesson06/ZombieApocalypse">Lesson06 - Zombie apocalypse!</a></li>
+    <li><a href="https://github.com/oscaroders/Processing/tree/master/Lesson09/GameOfLifeOfTheLonelyArray">Lesson09 - GameOfLifeOfTheLonelyArray</a></li>
 </ul>
 
 <h3> Side projects </h3>
