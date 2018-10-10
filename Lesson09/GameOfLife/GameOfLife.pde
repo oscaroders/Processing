@@ -7,6 +7,7 @@ int fillPercentage = 40;
 float cellSize = 10;
 
 void setup(){
+  fullScreen();
   size(500, 500);
   frameRate(2);
   ellipseMode(LEFT);
@@ -58,7 +59,7 @@ void checkBoard(){
 }
 
 boolean checkEdges(int x, int y){
-  if((y == 0 || x == 0 || y == numberOfColumns - 1 || x == numberOfRows - 1)){
+  if((y == 0 || x == 0 || y == numberOfRows - 1 || x == numberOfColumns - 1)){
     int i = -1, j = -1, iMax = 2, jMax = 2;
     if(y == 0)
       i = 0;

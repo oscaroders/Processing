@@ -38,5 +38,5 @@ public class GameObject{
     if(numberOfNeighbours == 3)
       return true;
     return false;
-  }  
+  }
 }
