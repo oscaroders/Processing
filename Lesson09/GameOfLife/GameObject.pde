@@ -4,6 +4,7 @@ public class GameObject{
   float y;
   float size;
   int numberOfNeighbours;
+  int aliveCount, deadCount, fader = 255;
 
   boolean alive;
 
@@ -18,10 +19,12 @@ public class GameObject{
   }
 
   void draw(){
-    if(alive)
-      fill(0, 225, 0);
-    if(!alive)
-      fill(255, 0, 0);
+    if(alive){
+      fill(0, 255, 28);
+    }
+    if(!alive){
+      fill(255, 0, 28);
+    }
     rect(x, y, size, size);
   }
 

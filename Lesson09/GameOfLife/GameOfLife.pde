@@ -3,13 +3,15 @@ int[][] neighbours;
 int numberOfColumns;
 int numberOfRows;
 int tempNeighbourCount;
+int fps = 2;
 int fillPercentage = 15;
 float cellSize = 10;
 
 void setup(){
   //fullScreen();
   size(500, 500);
-  //frameRate(2);
+  background(0);
+  frameRate(fps);
   ellipseMode(LEFT);
 
   numberOfColumns = (int)Math.floor(width/cellSize);
@@ -27,9 +29,8 @@ void setup(){
 }
 
 void draw(){
+  speedChange();
   checkBoard();
-
-  println(4 % 5);
 
   for(int y = 0; y < numberOfRows; y++){
     for(int x = 0; x < numberOfColumns; x++){
@@ -37,6 +38,16 @@ void draw(){
       cells[x][y].draw();
     }
   }
+}
+
+void speedChange(){
+  if((fps > 0) || (fps < 61)){
+    if(pressedUp())
+      fps++;
+    if(pressedDown())
+      fps--;
+  }
+  frameRate(fps);
 }
 
 void checkBoard(){
