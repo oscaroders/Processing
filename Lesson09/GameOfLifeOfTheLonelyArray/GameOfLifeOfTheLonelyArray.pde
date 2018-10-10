@@ -31,7 +31,7 @@ void checkBoard(){
   for(int i = 0; i < numberOfObjects; i++){
     tempNeighbourCount = 0;
     for(int j = 0; j < 8; j++){
-      if(i + neighbours[j] >= 0 && i + neighbours[j] < numberOfObjects){
+      if(i + neighbours[j] >= 0 && i + neighbours[j] < numberOfObjects){ //Fix "edges" so it dosent wrap from one side to the other. (and up...)
         if(cells[i + neighbours[j]].alive){
           tempNeighbourCount++;
         }
