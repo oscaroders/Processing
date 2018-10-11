@@ -5,15 +5,15 @@ int numberOfRows;
 int tempNeighbourCount;
 int generations;
 int frames;
-int fps = 30;
+int speedVal = 5;
 int fillPercentage = 15;
 float cellSize = 10;
 
 void setup(){
   //fullScreen();
-  size(500, 500);
+  size(800, 300);
   background(255);
-  frameRate(fps);
+  frameRate(speedVal);
   ellipseMode(LEFT);
 
   numberOfColumns = (int)Math.floor(width/cellSize);
@@ -32,17 +32,17 @@ void setup(){
 
 void draw(){
   frames++;
-  println("frames: " + frames);
-  println("fps: " + fps);
-  println(frames % fps);
   speedChange();
-  if(frames % fps == 0){
+  if(frames % speedVal == 0){
     if(!space){
       stroke(0);
       frameRate(60);
       if(!(mouseY < 0 || mouseX < 0 || mouseY > height || mouseX > width)){
-        if(mousePr()){
+        if(mousePr() && cells[(int)(mouseX / cellSize)][(int)(mouseY / cellSize)].alive == false){
           cells[(int)(mouseX / cellSize)][(int)(mouseY / cellSize)].alive = true;
+        } else if(mousePr() && cells[(int)(mouseX / cellSize)][(int)(mouseY / cellSize)].alive == true){
+          cells[(int)(mouseX / cellSize)][(int)(mouseY / cellSize)].alive = false;
+          cells[(int)(mouseX / cellSize)][(int)(mouseY / cellSize)].beenActive = false;
         }
       }
       for(int y = 0; y < numberOfRows; y++){
@@ -68,15 +68,15 @@ void draw(){
 }
 
 void speedChange(){
-  if((fps > 2) && (fps < 60)){
+  if((speedVal > 2) && (speedVal < 60)){
     if(pressedUp())
-      fps --;
+      speedVal --;
     if(pressedDown())
-      fps ++;
-  } else if(fps > 59) {
-    fps = 59;
-  } else if(fps < 3) {
-    fps = 3;
+      speedVal ++;
+  } else if(speedVal > 59) {
+    speedVal = 59;
+  } else if(speedVal < 3) {
+    speedVal = 3;
   }
 }
 
