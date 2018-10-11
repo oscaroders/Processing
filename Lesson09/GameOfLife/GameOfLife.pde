@@ -3,14 +3,16 @@ int[][] neighbours;
 int numberOfColumns;
 int numberOfRows;
 int tempNeighbourCount;
-int fps = 2;
+int generations;
+int frames;
+int fps = 30;
 int fillPercentage = 15;
 float cellSize = 10;
 
 void setup(){
   //fullScreen();
   size(500, 500);
-  background(0);
+  background(255);
   frameRate(fps);
   ellipseMode(LEFT);
 
@@ -22,32 +24,60 @@ void setup(){
   for(int y = 0; y < numberOfRows; y++){
     for(int x = 0; x < numberOfColumns; x++){
       cells[x][y] = new GameObject(x * cellSize, y * cellSize, cellSize);
-      if(random(100) < fillPercentage)
-        cells[x][y].alive = true;
+      // if(random(100) < fillPercentage)
+      //   cells[x][y].alive = true;
     }
   }
 }
 
 void draw(){
+  frames++;
+  println("frames: " + frames);
+  println("fps: " + fps);
+  println(frames % fps);
   speedChange();
-  checkBoard();
+  if(frames % fps == 0){
+    if(!space){
+      stroke(0);
+      frameRate(60);
+      if(!(mouseY < 0 || mouseX < 0 || mouseY > height || mouseX > width)){
+        if(mousePr()){
+          cells[(int)(mouseX / cellSize)][(int)(mouseY / cellSize)].alive = true;
+        }
+      }
+      for(int y = 0; y < numberOfRows; y++){
+        for(int x = 0; x < numberOfColumns; x++){
+          cells[x][y].draw();
+        }
+      }
+    } else {
+      noStroke();
 
-  for(int y = 0; y < numberOfRows; y++){
-    for(int x = 0; x < numberOfColumns; x++){
-      cells[x][y].update();
-      cells[x][y].draw();
+      checkBoard();
+
+      for(int y = 0; y < numberOfRows; y++){
+        for(int x = 0; x < numberOfColumns; x++){
+          cells[x][y].update();
+          cells[x][y].draw();
+        }
+      }
+      generations++;
+      textPrint();
     }
   }
 }
 
 void speedChange(){
-  if((fps > 0) || (fps < 61)){
+  if((fps > 2) && (fps < 60)){
     if(pressedUp())
-      fps++;
+      fps --;
     if(pressedDown())
-      fps--;
+      fps ++;
+  } else if(fps > 59) {
+    fps = 59;
+  } else if(fps < 3) {
+    fps = 3;
   }
-  frameRate(fps);
 }
 
 void checkBoard(){
@@ -100,4 +130,9 @@ boolean checkEdges(int x, int y){
   } else {
     return true;
   }
+}
+
+void textPrint(){
+  fill(0);
+  text("generations: " + generations, 12, 10);
 }

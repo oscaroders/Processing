@@ -5,6 +5,8 @@ public class GameObject{
   float size;
   int numberOfNeighbours;
   int aliveCount, deadCount, fader = 255;
+  color green = color(0, 255, 28);
+  boolean beenActive;
 
   boolean alive;
 
@@ -20,12 +22,37 @@ public class GameObject{
 
   void draw(){
     if(alive){
-      fill(0, 255, 28);
+      beenActive = true;
+      if(aliveCount < 2){
+        fill(green);
+        rect(x, y, size, size);
+      } else {
+        fill(aliveCount, y / 255, 28 + aliveCount);
+        rect(x, y, size, size);
+      }
+      aliveCount += 30;
+      deadCount = 0;
+      if(aliveCount > 255){
+        aliveCount = 255;
+      }
     }
     if(!alive){
-      fill(255, 0, 28);
+      if(deadCount < 1){
+        fill(139, 0, 0);
+        rect(x, y, size, size);
+      } else if(beenActive) {
+        fill(220, 0 + (deadCount * 25 * 2), 0 + (deadCount * 25 * 2));
+        rect(x, y, size, size);
+      } else {
+        fill(255, 255, 255);
+        rect(x, y, size, size);
+      }
+      deadCount++;
+      aliveCount = 0;
+      if(deadCount > 5){
+        deadCount = 5;
+      }
     }
-    rect(x, y, size, size);
   }
 
   void addNegihbourCount(int a){
