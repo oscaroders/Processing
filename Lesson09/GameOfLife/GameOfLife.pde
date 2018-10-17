@@ -1,138 +1,182 @@
 GameObject[][] cells;
 int[][] neighbours;
-int numberOfColumns;
-int numberOfRows;
-int tempNeighbourCount;
-int generations;
-int frames;
-int speedVal = 5;
-int fillPercentage = 15;
-float cellSize = 10;
+int numberOfColumns, numberOfRows, tempNeighbourCount, generations, steadyAt;
+int activeCells = 0, numberOfPrevActiveCells = 0;
+int fillPercentage = 10;
+float cellSize = 2;
+boolean steady;
 
 void setup(){
-  //fullScreen();
-  size(800, 300);
-  background(255);
-  frameRate(speedVal);
-  ellipseMode(LEFT);
-
-  numberOfColumns = (int)Math.floor(width/cellSize);
-  numberOfRows = (int)Math.floor(height/cellSize);
-  cells = new GameObject[numberOfColumns][numberOfRows];
-  neighbours = new int[numberOfColumns][numberOfRows];
-
-  for(int y = 0; y < numberOfRows; y++){
-    for(int x = 0; x < numberOfColumns; x++){
-      cells[x][y] = new GameObject(x * cellSize, y * cellSize, cellSize);
-      // if(random(100) < fillPercentage)
-      //   cells[x][y].alive = true;
-    }
-  }
+    size(1920, 1080);
+    frameRate(9);
+    gameSetup();
 }
+
 
 void draw(){
-  frames++;
-  speedChange();
-  if(frames % speedVal == 0){
-    if(!space){
-      stroke(0);
-      frameRate(60);
-      if(!(mouseY < 0 || mouseX < 0 || mouseY > height || mouseX > width)){
-        if(mousePr() && cells[(int)(mouseX / cellSize)][(int)(mouseY / cellSize)].alive == false){
-          cells[(int)(mouseX / cellSize)][(int)(mouseY / cellSize)].alive = true;
-        } else if(mousePr() && cells[(int)(mouseX / cellSize)][(int)(mouseY / cellSize)].alive == true){
-          cells[(int)(mouseX / cellSize)][(int)(mouseY / cellSize)].alive = false;
-          cells[(int)(mouseX / cellSize)][(int)(mouseY / cellSize)].beenActive = false;
-        }
-      }
-      for(int y = 0; y < numberOfRows; y++){
-        for(int x = 0; x < numberOfColumns; x++){
-          cells[x][y].draw();
-        }
-      }
-    } else {
-      noStroke();
+        if(!space){
+            clickInCell();
+            drawCells();
 
-      checkBoard();
-
-      for(int y = 0; y < numberOfRows; y++){
-        for(int x = 0; x < numberOfColumns; x++){
-          cells[x][y].update();
-          cells[x][y].draw();
+        } else {
+            pushMatrix();
+                noStroke();
+                zoomControl();
+                checkBoard();
+                updateCells();
+                drawCells();
+                printSteadyState();
+                generations++;
+                printGenerations();
+            popMatrix();
         }
-      }
-      generations++;
-      textPrint();
+}
+
+
+void zoomControl(){
+    float widthPresentage = mouseX / (float)width;
+    float heightPresentage = mouseY / (float)height;
+    float zoomX = width * zoomValue();
+    float zoomY = height * zoomValue();
+
+    translate(width * widthPresentage - zoomX * widthPresentage, height * heightPresentage - zoomY * heightPresentage);
+    scale(zoomValue());
+}
+
+
+void clickInCell(){
+    stroke(0);
+    int posX = (int)(mouseX / cellSize);
+    int posY = (int)(mouseY / cellSize);
+
+    if(!(mouseY < 0 || mouseX < 0 || mouseY > height || mouseX > width)){
+        if(mousePr() && cells[posX][(int)(mouseY / cellSize)].alive == false){
+            cells[posX][posY].alive = true;
+
+        } else if(mousePr() && cells[posX][posY].alive == true){
+                cells[posX][posY].alive = false;
+                cells[posX][posY].beenActive = false;
+        }
     }
-  }
 }
 
-void speedChange(){
-  if((speedVal > 2) && (speedVal < 60)){
-    if(pressedUp())
-      speedVal --;
-    if(pressedDown())
-      speedVal ++;
-  } else if(speedVal > 59) {
-    speedVal = 59;
-  } else if(speedVal < 3) {
-    speedVal = 3;
-  }
+
+void drawCells(){
+    for(int y = 0; y < numberOfRows; y++){
+        for(int x = 0; x < numberOfColumns; x++){
+            cells[x][y].draw();
+        }
+    }
 }
+
 
 void checkBoard(){
-  for(int y = 0; y < numberOfRows; y++){
-    for(int x = 0; x < numberOfColumns; x++){
-      tempNeighbourCount = 0;
-      if(checkEdges(x, y)){
-        for(int i = -1; i < 2; i++){
-          for(int j = -1; j < 2; j++){
-            if(!(i == 0 && j == 0)){
-              if(cells[x + j][y + i].alive){
-                tempNeighbourCount++;
-              }
+    int activeCells = 0;
+    for(int y = 0; y < numberOfRows; y++){
+        for(int x = 0; x < numberOfColumns; x++){
+            countNeighbours(x, y);
+            if(cells[x][y].alive){
+                activeCells++;
             }
-          }
+            cells[x][y].addNegihbourCount(tempNeighbourCount);
         }
-        neighbours[x][y] = tempNeighbourCount;
-      }
-      cells[x][y].addNegihbourCount(neighbours[x][y]);
     }
-  }
+    checkSteadyState(activeCells);
 }
 
-boolean checkEdges(int x, int y){
-  if((y == 0 || x == 0 || y == numberOfRows - 1 || x == numberOfColumns - 1)){
-    int i = -1, j = -1, iMax = 2, jMax = 2;
+
+void updateCells(){
+    for(int y = 0; y < numberOfRows; y++){
+        for(int x = 0; x < numberOfColumns; x++){
+            cells[x][y].update();
+        }
+    }
+}
+
+
+void countNeighbours(int x, int y){
+    tempNeighbourCount = 0;
+    if(atEdges(x, y)){
+        for(int deltaY = -1; deltaY < 2; deltaY++){
+            for(int deltaX = -1; deltaX < 2; deltaX++){
+                if(!(deltaY == 0 && deltaX == 0)){
+                    if(cells[x + deltaX][y + deltaY].alive){
+                        tempNeighbourCount++;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+boolean atEdges(int x, int y){
+    if((y == 0 || x == 0 || y == numberOfRows - 1 || x == numberOfColumns - 1)){
+        countNeighboursEdges(x, y);
+        return false;
+
+    } else {
+        return true;
+    }
+}
+
+
+void countNeighboursEdges(int x, int y){
+    int deltaY = -1, deltaX = -1, deltaYMax = 2, deltaXMax = 2;
     if(y == 0)
-      i = 0;
+      deltaY = 0;
     if(y == numberOfRows - 1)
-      iMax = 1;
+      deltaYMax = 1;
     if(x == 0)
-      j = 0;
+      deltaX = 0;
     if(x == numberOfColumns -1)
-      jMax = 1;
+      deltaXMax = 1;
 
-    while(i < iMax){
-      int tempJ = j;
-      while(tempJ < jMax){
-        if(!(i == 0 && tempJ == 0)){
-          if(cells[x + tempJ][y + i].alive){
-            tempNeighbourCount++;
-          }
+    while(deltaY < deltaYMax){
+        int tempDeltaX = deltaX;
+        while(tempDeltaX < deltaXMax){
+            if(!(deltaY == 0 && tempDeltaX == 0)){
+                if(cells[x + tempDeltaX][y + deltaY].alive){
+                    tempNeighbourCount++;
+                }
+            }
+            tempDeltaX++;
         }
-        tempJ++;
-      }
-      i++;
+        deltaY++;
     }
-    neighbours[x][y] = tempNeighbourCount;
-    return false;
-  } else {
-    return true;
-  }
 }
 
-void textPrint(){
-  fill(0);
-  text("generations: " + generations, 12, 10);
+
+void checkSteadyState(int numberOfActive){
+    if(checkIfSteady(numberOfActive)){
+        steady = true;
+    } else {
+        steady = false;
+        steadyAt = generations - 29;
+    }
+}
+
+
+boolean checkIfSteady(int numberOfActive){
+    if(numberOfActive == numberOfPrevActiveCells){
+        return true;
+    }
+    if(generations % 30 == 0){
+        numberOfPrevActiveCells = numberOfActive;
+    }
+    return false;
+}
+
+
+void printSteadyState(){
+    if(steady){
+        fill(0);
+        text("steady at: " + steadyAt + " generations" , 12, 20);
+    }
+}
+
+
+void printGenerations(){
+    fill(0);
+    text("generations: " + generations, 12, 10);
 }
