@@ -1,35 +1,41 @@
 GameObject[][] cells;
 int[][] neighbours;
-int numberOfColumns, numberOfRows, tempNeighbourCount, generations, steadyAt;
+int numberOfColumns, numberOfRows, tempNeighbourCount, generations, steadyAt, currentTime;
 int activeCells = 0, numberOfPrevActiveCells = 0;
 int fillPercentage = 10;
-float cellSize = 2;
+float dt, time;
+float cellSize = 4;
 boolean steady;
 
 void setup(){
-    size(1920, 1080);
-    frameRate(9);
+    size(1000, 500);
+    frameRate(60);
     gameSetup();
 }
 
 
 void draw(){
-        if(!space){
-            clickInCell();
-            drawCells();
+    currentTime = millis();
+    dt = (currentTime - time) * 0.001f;
 
-        } else {
-            pushMatrix();
-                noStroke();
-                zoomControl();
-                checkBoard();
-                updateCells();
-                drawCells();
-                printSteadyState();
-                generations++;
-                printGenerations();
-            popMatrix();
-        }
+    if(!space){
+        clickInCell();
+        drawCells();
+
+    } else {
+        pushMatrix();
+            noStroke();
+            zoomControl();
+            checkBoard();
+            updateCells();
+            drawCells();
+            printSteadyState();
+            generations++;
+            printGenerations();
+        popMatrix();
+    }
+
+    time = currentTime;
 }
 
 

@@ -46,6 +46,6 @@ boolean pressedDown(){
 }
 
 int zoomValue(){
-    zoom = constrain(zoom, 1, 5);
+    zoom = constrain(zoom, 1, 8);
     return zoom;
 }
