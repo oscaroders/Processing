@@ -31,4 +31,6 @@
   <li><a href="https://github.com/oscaroders/Processing/blob/master/SideProjects/Pong/Pong.pde">Pong</a></li>
 </ul>
 
+<h3> Game Design </h3>
+
 ![img](https://user-images.githubusercontent.com/13258500/47314935-5579d200-d643-11e8-8843-d9f6ac8e9dfd.png)
