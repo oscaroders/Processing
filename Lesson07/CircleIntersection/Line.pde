@@ -11,6 +11,10 @@ public class Line extends Shape{
 
   public void update(float dt){
     super.update(dt);
+    draw();
+  }
+
+  void draw(){
     line(pos.x, pos.y, dest.x, dest.y);
   }
 
@@ -87,5 +91,9 @@ public class Line extends Shape{
   //Help function for checking if a and b have same sign
   boolean sameSign(float a, float b){
     return ((a * b) >= 0);
+  }
+
+  boolean isLine(){
+    return true;
   }
 }

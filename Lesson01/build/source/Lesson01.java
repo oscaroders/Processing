@@ -232,11 +232,6 @@ public void scanLines(){
 
    frame++;
 }
-
-
-
-
-// kolla om man kan få PAC att äta i loop... och lite fortare... med modulus.
   public void settings() {  size(768, 432); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "Lesson01" };

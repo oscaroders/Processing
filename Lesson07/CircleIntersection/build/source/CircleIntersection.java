@@ -34,9 +34,9 @@ public void setup(){
   box2 = new Box(430, 220, 60, 40);
 
   line1 = new Line(10, 10, width - 10, height - 10);
-  line2 = new Line(width - 10, 10, 10, height - 200);
+  line2 = new Line(width - 10, 10, 10, height - 10);
 
-  player = new MultiBox(400, 141, 40, 80);
+  player = new MultiBox(400, 1, 40, 80);
 
   shapes.add(circ1);
   shapes.add(circ2);
@@ -52,10 +52,14 @@ public void setup(){
 
 public void draw(){
   tickDeltaTime();
-  background(128);
+  background(255);
 
   for(int i = 0; i < shapes.size(); i++){
     shapes.get(i).update(_dt);
+    if(shapes.get(i).isBox()){
+      player.fall((Box)shapes.get(i));
+    }
+
   }
 
   if(line1.intersectsLine(line2)){
@@ -77,19 +81,23 @@ public void tickDeltaTime(){
 }
 public class Box extends Shape{
   public PVector size;
-  
+
   public Box(float x, float y, float w, float h){
     super(x, y);
-    
+
     size = new PVector(w, h);
   }
-  
+
   public void update(float dt){
     super.update(dt);
+    draw();
+  }
+
+  public void draw(){
     rectMode(CENTER);
     rect(pos.x, pos.y, size.x, size.y);
   }
-  
+
   public boolean intersectsBox(Box other){
     return !(
       other.minX() > maxX() ||
@@ -98,40 +106,60 @@ public class Box extends Shape{
       other.minY() > maxY()
     );
   }
-  
+
   public float maxX(){
     return pos.x + size.x * 0.5f;
   }
-  
+
   public float maxY(){
     return pos.y + size.y * 0.5f;
   }
-  
+
   public float minX(){
     return pos.x - size.x * 0.5f;
   }
-  
+
   public float minY(){
     return pos.y - size.y * 0.5f;
+  }
+
+  public boolean isBox(){
+    return true;
+  }
+
+  public void set(float x, float y, float w, float h){
+    pos.x = x;
+    pos.y = y;
+    size.x = w;
+    size.y = h;
   }
 }
 public class Circle extends Shape{
   public float r;
-  
+
   public Circle(float x, float y, float d){
     super(x, y);
-    
+
     this.r = d * 0.5f;
   }
-  
+
   public void update(float dt){
     super.update(dt);
+    draw();
+  }
+
+  public void draw(){
     ellipse(pos.x, pos.y, r * 2, r * 2);
   }
-  
+
   public boolean intersectsCircle(Circle other){
     return dist(pos.x, pos.y, other.pos.x, other.pos.y) < r + other.r;
   }
+
+  public boolean isCircle(){
+    return true;
+  }
+
 }
 //Repetition av OOP
 //  public, private, protected
@@ -171,6 +199,55 @@ public class Circle extends Shape{
 //4.Implementera att avsaknad av on-kollision leder till att multikollision börjar falla igen
 //*5.Implementera möjlighet för multikollisionsobjetet att gå höger och vänster och "hoppa"
 //*6.Implementera att kollision mellan multikollisionsobjektet och cirklar tar bort cirklarna
+boolean moveLeft;
+boolean moveRight;
+
+public void keyPressed(){
+  if(key == CODED){
+    if(keyCode == RIGHT){
+      moveRight = true;
+    }
+    if(keyCode == LEFT){
+      moveLeft = true;
+    }
+  }
+  if(key == 'd' || key == 'D'){
+    moveRight = true;
+  }
+  if(key == 'a' || key == 'A'){
+    moveLeft = true;
+  }
+}
+
+public void keyReleased(){
+  if(key == CODED){
+    if(keyCode == RIGHT){
+      moveRight = false;
+    }
+    if(keyCode == LEFT){
+      moveLeft = false;
+    }
+  }
+  if(key == 'd' || key == 'D'){
+    moveRight = false;
+  }
+  if(key == 'a' || key == 'A'){
+    moveLeft = false;
+  }
+}
+
+public float getAxisRaw(String axis){
+  if(axis == "Horizontal"){
+    if(moveLeft){
+      return -1;
+    }
+    if(moveRight){
+      return 1;
+    }
+  }
+
+  return 0;
+}
 //http://processingjs.org/learning/custom/intersect/
 public class Line extends Shape{
   public PVector dest;
@@ -184,6 +261,10 @@ public class Line extends Shape{
 
   public void update(float dt){
     super.update(dt);
+    draw();
+  }
+
+  public void draw(){
     line(pos.x, pos.y, dest.x, dest.y);
   }
 
@@ -237,9 +318,6 @@ public class Line extends Shape{
        offset = denom / 2 ;
      }
 
-     // The denom/2 is to get rounding instead of truncating. It
-     // is added or subtracted to the numerator, depending upon the
-     // sign of the numerator.
      num = (b1 * c2) - (b2 * c1);
      if (num < 0){
        intersX = (num - offset) / denom;
@@ -264,50 +342,114 @@ public class Line extends Shape{
   public boolean sameSign(float a, float b){
     return ((a * b) >= 0);
   }
+
+  public boolean isLine(){
+    return true;
+  }
 }
 public class MultiBox extends Shape{
   public Box center;
   public Box inLeft, inRight, inTop, inBot;
   public Box onLeft, onRight, onTop, onBot;
-  
+
+  float velocityY = 160, velocityX = 0, acceleration = 5;
+  PVector velocity;
+  float w, h, xSpeed = 5;
+
   public MultiBox(float x, float y, float w, float h){
     super(x, y);
-    
+
+    velocity = new PVector(velocityX, velocityY);
+
+    this.w = w;
+    this.h = h;
+
     center = new Box(x, y, w, h);
-    
+
     inLeft = new Box(x - w * 0.5f + 2, y, 2, 10);
     inRight = new Box(x + w * 0.5f - 2, y, 2, 10);
     inTop = new Box(x, y - h * 0.5f + 2, 10, 2);
     inBot = new Box(x, y + h * 0.5f - 2, 10, 2);
-    
+
     onLeft = new Box(x - w * 0.5f - 1, y, 2, 10);
     onRight = new Box(x + w * 0.5f + 1, y, 2, 10);
     onTop = new Box(x, y - h * 0.5f - 1, 10, 2);
     onBot = new Box(x, y + h * 0.5f + 1, 10, 2);
   }
-  
+
   public void update(float dt){
     super.update(dt);
+
+    center.set(pos.x, pos.y, w, h);
+
+    inLeft.set(pos.x - w * 0.5f + 2, pos.y, 2, 10);
+    inRight.set(pos.x + w * 0.5f - 2, pos.y, 2, 10);
+    inTop.set(pos.x, pos.y - h * 0.5f + 2, 10, 2);
+    inBot.set(pos.x, pos.y + h * 0.5f - 2, 10, 2);
+
+    onLeft.set(pos.x - w * 0.5f - 1, pos.y, 2, 10);
+    onRight.set(pos.x + w * 0.5f + 1, pos.y, 2, 10);
+    onTop.set(pos.x, pos.y - h * 0.5f - 1, 10, 2);
+    onBot.set(pos.x, pos.y + h * 0.5f + 1, 10, 2);
+
+    movment();
+    jump();
+    draw();
+  }
+
+  public void draw(){
     rectMode(CENTER);
     rect(pos.x, pos.y, center.size.x, center.size.y);
   }
-  
+
   public boolean inGround(Box other){
     return inBot.intersectsBox(other);
   }
-  
+
   public boolean onGround(Box other){
     return onBot.intersectsBox(other);
+  }
+
+  public void fall(Box other){
+    if(!(onBot.intersectsBox(other))){
+      velocity.set(velocity.x, velocity.y + acceleration);
+      pos.y += velocity.y * _dt;
+      pos.x += velocity.x * _dt;
+    } else {
+      pos.y = pos.y;
+      pos.x = pos.x;
+    }
+  }
+
+  public void jump(){
+
+  }
+
+  public void movment(){
+    float xMovment = getAxisRaw("Horizontal") * xSpeed;
+    pos.x += xMovment;
   }
 }
 public abstract class Shape{
   public PVector pos;
-  
+
   public Shape(float x, float y){
     pos = new PVector(x, y);
   }
-  
+
   public void update(float dt){
+  }
+
+  public boolean isBox(){
+    return false;
+  }
+
+  public boolean isCircle(){
+    return false;
+  }
+
+  public boolean isLine(){
+    return false;
   }
 }
   public void settings() {  size(640, 480); }

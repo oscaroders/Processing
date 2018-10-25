@@ -1,10 +1,10 @@
 GameObject[][] cells;
 int[][] neighbours;
-int numberOfColumns, numberOfRows, tempNeighbourCount, generations, steadyAt, currentTime;
+int numberOfColumns, numberOfRows, tempNeighbourCount, generations, steadyAt, currentTime, timeSpeed;
 int activeCells = 0, numberOfPrevActiveCells = 0;
-int fillPercentage = 10;
+int fillPercentage = 15;
 float dt, time;
-float cellSize = 4;
+float cellSize = 20;
 boolean steady;
 
 void setup(){
@@ -23,16 +23,19 @@ void draw(){
         drawCells();
 
     } else {
-        pushMatrix();
-            noStroke();
-            zoomControl();
-            checkBoard();
-            updateCells();
-            drawCells();
-            printSteadyState();
-            generations++;
-            printGenerations();
-        popMatrix();
+        //if(dt < setTimeSpeed()){
+            //delay((int)(setTimeSpeed() * 1000 - dt));
+            pushMatrix();
+                noStroke();
+                zoomControl();
+                checkBoard();
+                updateCells();
+                drawCells();
+                printSteadyState();
+                generations++;
+                printGenerations();
+            popMatrix();
+        //}
     }
 
     time = currentTime;
@@ -73,6 +76,16 @@ void drawCells(){
             cells[x][y].draw();
         }
     }
+}
+
+
+float setTimeSpeed(){
+    timeSpeed = constrain(timeSpeed, 1, 6);
+    if(pressedUp())
+        timeSpeed += 10;
+    if(pressedDown())
+        timeSpeed -= 10;
+    return timeSpeed;
 }
 
 

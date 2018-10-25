@@ -20,7 +20,7 @@ public void setup(){
   line1 = new Line(10, 10, width - 10, height - 10);
   line2 = new Line(width - 10, 10, 10, height - 10);
 
-  player = new MultiBox(400, 141, 40, 80);
+  player = new MultiBox(400, 1, 40, 80);
 
   shapes.add(circ1);
   shapes.add(circ2);
@@ -36,10 +36,14 @@ public void setup(){
 
 public void draw(){
   tickDeltaTime();
-  background(128);
+  background(255);
 
   for(int i = 0; i < shapes.size(); i++){
     shapes.get(i).update(_dt);
+    if(shapes.get(i).isBox()){
+      player.fall((Box)shapes.get(i));
+    }
+
   }
 
   if(line1.intersectsLine(line2)){
